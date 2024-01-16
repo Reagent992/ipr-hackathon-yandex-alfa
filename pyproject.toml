@@ -1,0 +1,49 @@
+[tool.black]
+line-length = 79
+target-version = ['py312']
+include = '\.pyi?$'
+extend-exclude = '''
+(
+    \.git
+    | venv
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | migrations
+    | settings
+    | wsgi
+    | asgi
+    | manage
+    | \.pyc
+    | \.pyo
+    | \.pyd
+    | \.db
+    | \.bak
+    | \.swp
+    | \.log
+    | \.sql
+    | \.sqlite3
+    | \.sqlite3-journal
+    | ^setup\.py
+    | ^__init__\.py
+)
+'''
+
+[tool.isort]
+include_trailing_comma = true
+profile = "black"
+py_version = 312
+skip = [".gitignore", ".dockerignore", "__init__.py"]
+skip_glob = [
+    "docs/*",
+    "**/migrations/*.py",
+    "tests/",
+    "*/migrations/",
+    "venv/",
+    "venv/*",
+    "*/venv/",
+    "env/",
+    "static/*",
+    "templates/*",
+]

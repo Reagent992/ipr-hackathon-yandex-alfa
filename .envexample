@@ -1,0 +1,4 @@
+SECRET_KEY=django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167
+DEBUG=False
+TIME_ZONE=Europe/Moscow
+LANGUAGE_CODE=ru-RU
