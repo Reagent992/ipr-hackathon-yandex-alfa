@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.utils.timezone import timedelta
@@ -10,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env.str("SECRET_KEY")
 
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -31,6 +32,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "tasks.apps.TasksConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -96,6 +98,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
