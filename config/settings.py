@@ -1,7 +1,8 @@
 from pathlib import Path
 
-from django.utils.timezone import timedelta
 from environs import Env
+
+from django.utils.timezone import timedelta
 
 env = Env()
 env.read_env()
@@ -31,6 +32,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "ipr.apps.IprConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
