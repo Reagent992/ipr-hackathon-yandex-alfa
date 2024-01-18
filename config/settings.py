@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.utils.timezone import timedelta
@@ -31,6 +32,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "users.apps.UsersConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -99,6 +101,12 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+#  -------------------------------------------------------------CUSTOM SETTINGS
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = "users.User"
 # -----------------------------------------------------------------DRF SETTINGS
 
 REST_FRAMEWORK = {
@@ -117,3 +125,12 @@ if DEBUG:
         "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "AUTH_HEADER_TYPES": ("Bearer",),
     }
+
+# --------------------------------------------------------------DJOSER SETTINGS
+
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    # TODO: "PERMISSIONS": {},
+}
+
+# -------------------------------------------------------------ALTER USER MODEL
