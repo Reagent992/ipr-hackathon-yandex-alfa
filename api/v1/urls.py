@@ -1,7 +1,10 @@
 from django.urls import include, path
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions, routers
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
+from rest_framework import routers
 
 v1_router = routers.DefaultRouter()
 
@@ -11,32 +14,17 @@ urlpatterns = [
     path("auth/", include("djoser.urls.jwt")),
 ]
 
-# ----------------------------------------------------------------------SWAGGER
-schema_view = get_schema_view(
-    openapi.Info(
-        title="IPR API",
-        default_version="v1",
-        description="Документация для приложения ИПР.",
-        license=openapi.License(name="MIT License"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
-
+#  ---------------------------------------------------------------------SWAGGER
 urlpatterns += [
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "swagger<format>/",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
+        "schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
     ),
     path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
-    path(
-        "redoc/",
-        schema_view.with_ui("redoc", cache_timeout=0),
-        name="schema-redoc",
+        "schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
     ),
 ]

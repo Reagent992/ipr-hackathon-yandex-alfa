@@ -22,7 +22,7 @@ class User(AbstractUser):
     )
 
     class Meta:
-        ordering = ["date_joined"]
+        ordering = ("date_joined",)
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
@@ -32,13 +32,21 @@ class User(AbstractUser):
     def get_full_name(self) -> str:
         """ФИО."""
         names = (self.last_name, self.first_name, self.patronymic)
-        return " ".join(names) if any(names) else self.username
+        return " ".join(names) if any(names) else self.username or self.email
+
+    def get_first_team(self):
+        team_participation = self.participates.first()
+        return team_participation.team if team_participation else None
+
+    def get_first_team_name(self):
+        team = self.get_first_team()
+        return team.name if team else None
 
 
 class Team(models.Model):
     """Команда."""
 
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, verbose_name="Название команды")
     boss = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -50,7 +58,7 @@ class Team(models.Model):
     )
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ("-created_at",)
         verbose_name = "Команда"
         verbose_name_plural = "Команды"
 

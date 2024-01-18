@@ -20,7 +20,7 @@
 | [DRF](https://pypi.org/project/djangorestframework/)| Фреймворк для создания API в приложениях Django.|
 | [Gunicorn](https://pypi.org/project/gunicorn/)| WSGI-сервер для запуска веб-приложений Django. |
 | [Environs](https://pypi.org/project/environs/) | Библиотека для управления переменными окружения и хранения секретов. |
-| [Drf-yasg](https://pypi.org/project/drf-yasg/) | Генератор документации и Swagger для API в Django. |
+| [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/index.html) | Генератор документации и Swagger для API в Django. |
 | [Djoser](https://pypi.org/project/djoser/) | Библиотека для обеспечения аутентификации в приложениях Django. |
 | [Pillow](https://pypi.org/project/pillow/) | Библиотека для обработки изображений в Python. |
 | [Django filter](https://pypi.org/project/django-filter/) | Библиотека для легкой фильтрации данных в приложениях Django. |

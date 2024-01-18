@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
@@ -55,12 +57,14 @@ class UserAdmin(admin.ModelAdmin):
 
     exclude = (
         "last_login",
+        "date_joined",
         "groups",
         "user_permissions",
         "is_staff",
     )
     list_display = (
         "name",
+        "team",
         "email",
         "userpic_thumbnail",
     )
@@ -81,8 +85,12 @@ class UserAdmin(admin.ModelAdmin):
             else None
         )
 
-    @admin.display(description="Текущая картинка")
+    @admin.display(description="Текущий аватар")
     def image_preview(self, obj: User):
         if obj.userpic:
             return mark_safe(f'<img src="{obj.userpic.url}" />')
-        return "Картинка еще не загружена."
+        return "Аватар не загружен."
+
+    @admin.display(description="Команда")
+    def team(self, user: User) -> Optional[str]:
+        return user.get_first_team_name()
