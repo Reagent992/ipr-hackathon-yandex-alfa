@@ -13,13 +13,19 @@ admin.site.unregister(Group)
 class MemberAdmin(admin.ModelAdmin):
     """Сотрудники."""
 
-    # TODO: Добавить поиск и фильтрацию.
     list_display = (
         "member",
         "userpic_thumbnail",
         "team",
         "position",
         "joined_at",
+    )
+    list_filter = ("team",)
+    search_fields = ("position",)
+    date_hierarchy = "joined_at"
+    autocomplete_fields = (
+        "team",
+        "member",
     )
 
     @admin.display(description="Аватар")
@@ -31,24 +37,25 @@ class MemberAdmin(admin.ModelAdmin):
             else None
         )
 
-    # @admin.display(description="Последний ИПР")
-    # def get_iprs(self, obj: User) -> str:
-    #     # TODO: Вывести ссылку на редактирование последнего IPR.
-    #     return ""
-
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     """Команда."""
-
-    # TODO: Добавить поиск и фильтрацию.
-    # TODO: Добавить текущий ИПР.
 
     list_display = (
         "name",
         "boss",
         "created_at",
     )
+    search_fields = (
+        "name",
+        "boss__last_name",
+        "boss__first_name",
+        "boss__patronymic",
+    )
+    ordering = ("-created_at",)
+    date_hierarchy = "created_at"
+    autocomplete_fields = ("boss",)
 
 
 @admin.register(User)
@@ -68,9 +75,15 @@ class UserAdmin(admin.ModelAdmin):
         "email",
         "userpic_thumbnail",
     )
+    search_fields = (
+        "email",
+        "last_name",
+        "first_name",
+        "patronymic",
+    )
+    date_hierarchy = "date_joined"
     ordering = ("-date_joined",)
     readonly_fields = ("image_preview",)
-    # TODO: Добавить поиск и фильтрацию.
 
     @admin.display(description="ФИО")
     def name(self, obj: User) -> str:
@@ -93,4 +106,4 @@ class UserAdmin(admin.ModelAdmin):
 
     @admin.display(description="Команда")
     def team(self, user: User) -> Optional[str]:
-        return user.get_first_team_name()
+        return user.get_last_team_name()

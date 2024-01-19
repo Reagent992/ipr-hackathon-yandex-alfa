@@ -34,12 +34,14 @@ class User(AbstractUser):
         names = (self.last_name, self.first_name, self.patronymic)
         return " ".join(names) if any(names) else self.username or self.email
 
-    def get_first_team(self):
-        team_participation = self.participates.first()
+    def get_last_team(self):
+        """Первая команда в которую вступил пользователь."""
+        team_participation = self.participates.last()
         return team_participation.team if team_participation else None
 
-    def get_first_team_name(self):
-        team = self.get_first_team()
+    def get_last_team_name(self):
+        """Имя первой команды в которую вступил пользователь."""
+        team = self.get_last_team()
         return team.name if team else None
 
 
@@ -95,4 +97,9 @@ class Member(models.Model):
         verbose_name_plural = "Участники команды"
 
     def __str__(self) -> str:
-        return self.member.get_full_name()
+        return self.member.get_full_name() + " (" + self.team.name + ")"
+
+    @classmethod
+    def find_members_objects_by_user_obj(cls, user_obj: User):
+        """Получение всех объектов Member по Пользователю."""
+        return cls.objects.filter(member=user_obj)
