@@ -36,22 +36,25 @@ class UserTestCase(TestCase):
         self.user_first_name = "John"
         self.user_patronymic = "Smith"
         self.user_full_name = "Doe John Smith"
+        self.position = "Developer"
         self.user = User.objects.create_user(
             username=self.username,
             email=f"{self.username}@example.com",
             last_name=self.user_last_name,
             first_name=self.user_first_name,
             patronymic=self.user_patronymic,
+            position=self.position,
             userpic=self.uploaded,
         )
         # -----------------------------------------------------------BOSS-USERS
-        self.chief_full_name = "Ilon Mask Big"
+        self.chief_full_name = "Ilon Mask X"
         self.chief = User.objects.create(
             username="IlonMask",
             email="ilon@example.com",
             first_name="Ilon",
             last_name="Mask",
-            patronymic="Big",
+            patronymic="X",
+            position="Low CEO",
             userpic=self.uploaded,
         )
         self.ceo = "Tim Cook Apple"
@@ -61,6 +64,7 @@ class UserTestCase(TestCase):
             first_name="Tim",
             last_name="Cook",
             patronymic="Apple",
+            position="Big CEO",
             userpic=self.uploaded,
         )
         # ---------------------------------------------------------------------

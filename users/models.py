@@ -20,6 +20,9 @@ class User(AbstractUser):
         help_text="Загрузка аватара пользователя",
         blank=True,
     )
+    position = models.CharField(
+        max_length=150, verbose_name="Должность", blank=True
+    )
 
     class Meta:
         ordering = ("-date_joined",)
@@ -79,9 +82,6 @@ class MiddleUsersTeams(models.Model):
     )
     joined_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата вступления"
-    )
-    position = models.CharField(
-        max_length=150, verbose_name="Должность", blank=True
     )
 
     class Meta:

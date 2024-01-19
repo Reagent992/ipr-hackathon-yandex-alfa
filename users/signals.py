@@ -10,7 +10,4 @@ def assign_boss_on_team_creation(sender, instance, created, **kwargs):
     Сигнал, который автоматически назначает руководителя команды ее участником.
     """
     if created:
-        team_position = f"Руководитель команды {instance.name}"
-        instance.participants.create(
-            user=instance.boss, position=team_position
-        )
+        instance.participants.create(user=instance.boss)
