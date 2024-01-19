@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 
-from users.models import Member, Team
+from users.models import Team
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -63,7 +63,7 @@ class UserTestCase(TestCase):
             patronymic="Apple",
             userpic=self.uploaded,
         )
-        # ------------------------------------------------------------ALL-USERS
+        # ---------------------------------------------------------------------
         self.amount_of_users = 3
         # -----------------------------------------------------------------TEAM
         self.low_team_name = "Team X"
@@ -74,17 +74,11 @@ class UserTestCase(TestCase):
         self.big_team = Team.objects.create(
             name=self.big_team_name, boss=self.ceo
         )
-        # ------------------------------------------------------------ALL-TEAMS
+        # ---------------------------------------------------------------------
         self.amount_of_teams = 2
-        # ---------------------------------------------------------------Member
-        self.user_member = Member.objects.create(
-            member=self.user, team=self.low_team, position="Developer"
-        )
-        self.chief_member = Member.objects.create(
-            member=self.chief,
-            team=self.big_team,
-            position="Chief of Developers",
-        )
+        # --------------------------------------------------------Team Joining
+        self.low_team.users.add(self.user)
+        self.big_team.users.add(self.chief)
 
     def tearDown(self) -> None:
         """Удаляем временную папку для медиа-файлов."""
@@ -104,31 +98,6 @@ class UserTestCase(TestCase):
             self.user.__str__(),
             self.user_full_name,
             "Метод __str__ выдал неверный результат",
-        )
-
-    def test_get_team_name(self):
-        """Проверка метода get_last_team_name."""
-        self.assertEqual(
-            self.user.get_last_team_name(),
-            self.low_team_name,
-            "Метод get_last_team_name выдал неверный результат",
-        )
-
-    def test_get_first_team(self):
-        """Проверка метода get_last_team."""
-        self.assertEqual(
-            self.user.get_last_team(),
-            self.low_team,
-            "Метод get_last_team выдал неверный результат",
-        )
-
-    def test_get_team_name_for_user_with_two_teams(self):
-        """Проверка метода get_last_team_name
-        для пользователя с двумя командами."""
-        self.assertEqual(
-            self.chief.get_last_team(),
-            self.low_team,
-            "Метод get_last_team выдал неверный результат",
         )
 
     def test_user_creation(self):
@@ -173,32 +142,20 @@ class UserTestCase(TestCase):
 
     def test_django_signal(self):
         """
-        При создание команды,
-        руководитель автоматически назначается ее участником.
+        Руководитель автоматически назначается участником своей команды.
         """
-        self.assertEqual(
-            self.chief,
-            self.big_team.participants.filter(member=self.chief)
-            .first()
-            .member,
-            f"{self.chief} не является участником команды {self.big_team}",
-        )
-        self.assertEqual(
-            Member.objects.count(),
-            4,
-            "Не совпадает количество участников команд",
+        self.assertTrue(
+            self.low_team.users.filter(id=self.chief.id).exists(),
+            f"Пользователь {self.chief} не состоит в команде {self.low_team}",
         )
 
     def test_chief_participates_two_teams(self):
         """chief состоит сразу в двух командах."""
         self.assertTrue(
-            self.chief
-            == self.low_team.participants.filter(member=self.chief)
-            .first()
-            .member
-            and self.chief
-            == self.big_team.participants.filter(member=self.chief)
-            .first()
-            .member,
-            f"{self.chief} не состоит в {self.low_team} и {self.big_team}",
+            self.low_team.users.filter(id=self.chief.id).exists()
+            and self.big_team.users.filter(id=self.chief.id).exists()
         )
+
+    def test_user_participates_in_one_team(self):
+        """Пользователь состоит в команде."""
+        self.assertTrue(self.low_team.users.filter(id=self.user.id).exists())

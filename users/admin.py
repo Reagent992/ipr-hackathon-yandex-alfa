@@ -4,38 +4,14 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
-from users.models import Member, Team, User
+from users.models import MiddleUsersTeams, Team, User
 
 admin.site.unregister(Group)
 
 
-@admin.register(Member)
-class MemberAdmin(admin.ModelAdmin):
-    """Сотрудники."""
-
-    list_display = (
-        "member",
-        "userpic_thumbnail",
-        "team",
-        "position",
-        "joined_at",
-    )
-    list_filter = ("team",)
-    search_fields = ("position",)
-    date_hierarchy = "joined_at"
-    autocomplete_fields = (
-        "team",
-        "member",
-    )
-
-    @admin.display(description="Аватар")
-    def userpic_thumbnail(self, obj: Member):
-        """Маленький аватар пользователя."""
-        return (
-            mark_safe(f'<img src={obj.member.userpic.url} width="80">')
-            if obj.member.userpic
-            else None
-        )
+class MiddleUsersTeamsInline(admin.TabularInline):
+    model = MiddleUsersTeams
+    extra = 1
 
 
 @admin.register(Team)
@@ -53,6 +29,7 @@ class TeamAdmin(admin.ModelAdmin):
         "boss__first_name",
         "boss__patronymic",
     )
+    inlines = [MiddleUsersTeamsInline]
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     autocomplete_fields = ("boss",)
