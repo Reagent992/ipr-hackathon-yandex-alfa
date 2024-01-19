@@ -47,13 +47,13 @@ class UserTestCase(TestCase):
             userpic=self.uploaded,
         )
         # -----------------------------------------------------------BOSS-USERS
-        self.chief_full_name = "Ilon Mask Big"
+        self.chief_full_name = "Ilon Mask X"
         self.chief = User.objects.create(
             username="IlonMask",
             email="ilon@example.com",
             first_name="Ilon",
             last_name="Mask",
-            patronymic="Big",
+            patronymic="X",
             position="Low CEO",
             userpic=self.uploaded,
         )
