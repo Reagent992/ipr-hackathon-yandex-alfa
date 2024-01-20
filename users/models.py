@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser
@@ -37,21 +38,26 @@ class User(AbstractUser):
         names = (self.last_name, self.first_name, self.patronymic)
         return " ".join(names) if any(names) else self.username or self.email
 
+    def get_team(self) -> Optional["Team"]:
+        """Возвращает команду пользователя, если она существует."""
+        return self.team.first() if self.team.exists() else None
+
 
 class Team(models.Model):
     """Команда."""
 
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=150, verbose_name="Название команды")
     boss = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        related_name="subordinates",
+        related_name="managed_team",
         verbose_name="Руководитель",
     )
     users = models.ManyToManyField(
         User,
         through="MiddleUsersTeams",
-        related_name="teams",
+        related_name="team",
         verbose_name="Участники команды",
     )
     created_at = models.DateTimeField(
@@ -88,6 +94,7 @@ class MiddleUsersTeams(models.Model):
         ordering = ("-joined_at",)
         verbose_name = "Участник команды"
         verbose_name_plural = "Участники команды"
+        unique_together = ("user",)
 
     def __str__(self) -> str:
-        return self.user.get_full_name() + " (" + self.team.name + ")"
+        return f"{self.user.get_full_name()} ({self.team.name})"
