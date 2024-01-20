@@ -3,7 +3,10 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
 
+from tasks.views import TaskViewSet
+
 v1_router = routers.DefaultRouter()
+v1_router.register('tasks', TaskViewSet, basename='tasks')
 
 urlpatterns = [
     path("", include(v1_router.urls)),
