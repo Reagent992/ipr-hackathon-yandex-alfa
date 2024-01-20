@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.utils.timezone import timedelta
@@ -26,11 +27,12 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
-    "drf_yasg",
     "django_filters",
+    "drf_spectacular",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "users.apps.UsersConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -99,6 +101,12 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+#  -------------------------------------------------------------CUSTOM SETTINGS
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = "users.User"
 # -----------------------------------------------------------------DRF SETTINGS
 
 REST_FRAMEWORK = {
@@ -111,9 +119,26 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 if DEBUG:
     SIMPLE_JWT = {
         "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "AUTH_HEADER_TYPES": ("Bearer",),
     }
+
+# --------------------------------------------------------------DJOSER SETTINGS
+
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    # TODO: "PERMISSIONS": {},
+}
+
+# -------------------------------------------------------------ALTER USER MODEL
+SPECTACULAR_SETTINGS = {
+    "TITLE": "IPR API",
+    "DESCRIPTION": "Проект ИПР.",
+    "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": "/api/v1/",
+    "SCHEMA_PATH_PREFIX_TRIM": True,
+}
