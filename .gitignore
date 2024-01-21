@@ -149,6 +149,8 @@ dmypy.json
 .DS_Store
 Thumbs.db
 
-/backend/media/
-/backend/collected_static/
-/static/
+/media/
+/collected_static/
+.vscode
+*/migrations/*
+# Миграции убраны из git. Т.к. до существования БД проще без них.
