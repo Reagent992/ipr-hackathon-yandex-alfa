@@ -1,5 +1,4 @@
 from typing import Optional
-from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -8,8 +7,7 @@ from django.db import models
 class User(AbstractUser):
     """Расширенная модель пользователя."""
 
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, db_index=True)
     last_name = models.CharField(max_length=150, verbose_name="Фамилия")
     first_name = models.CharField(max_length=150, verbose_name="Имя")
     patronymic = models.CharField(
@@ -46,9 +44,8 @@ class User(AbstractUser):
 class Team(models.Model):
     """Команда."""
 
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=150, verbose_name="Название команды")
-    boss = models.ForeignKey(
+    boss = models.OneToOneField(
         User,
         on_delete=models.PROTECT,
         related_name="managed_team",
