@@ -3,7 +3,7 @@ from django.contrib import admin
 from tasks.models import Task, Skill
 
 
-
+@admin.display(description="Список навыков")
 class TaskAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "creation_date",
                     "start_date", "end_date", "status", "display_skills")
@@ -12,7 +12,6 @@ class TaskAdmin(admin.ModelAdmin):
         return ', '.join([skill.name for skill in obj.skill.all()])
 
 
-@admin.display(description="Список навыков")
 class SkillAdmin(admin.ModelAdmin):
     list_display = ['skill_name']
 

@@ -11,5 +11,5 @@ class TaskSerializer(serializers.ModelSerializer):
     creator = SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
-        exclude = ("creationdate",)
+        exclude = ("creation_date",)
         model = Task
