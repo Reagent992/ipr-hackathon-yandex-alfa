@@ -14,11 +14,13 @@ class TaskStatus(models.TextChoices):
 
 
 class Skill(models.Model):
-    skill_name = models.CharField(max_length=255, verbose_name = "Навык",
-                                  )
+    skill_name = models.CharField(
+        max_length=255,
+        verbose_name="Навык",
+    )
 
     class Meta:
-        ordering = ('skill_name',)
+        ordering = ("skill_name",)
         verbose_name = "Навыки"
         verbose_name_plural = "Навыки"
 
@@ -28,6 +30,7 @@ class Skill(models.Model):
 
 class Task(models.Model):
     """Модель задачи."""
+
     name = models.CharField(
         max_length=100,
         verbose_name="Название задачи",
@@ -46,19 +49,24 @@ class Task(models.Model):
         auto_now_add=True,
         verbose_name="Дата создания задачи",
     )
-    start_date = models.DateField(verbose_name="Дата начала работ по задаче",
-                                  null=True, blank=True,
+    start_date = models.DateField(
+        verbose_name="Дата начала работ по задаче",
+        null=True,
+        blank=True,
     )
-    end_date = models.DateField(verbose_name="Дедлайн задачи",  null=True,
-                                blank=True,)
+    end_date = models.DateField(
+        verbose_name="Дедлайн задачи",
+        null=True,
+        blank=True,
+    )
     status = models.CharField(
-        max_length=20, choices=TaskStatus.choices,
-        default=TaskStatus.NONE, verbose_name="Статус задачи"
+        max_length=20,
+        choices=TaskStatus,
+        default=TaskStatus.NONE,
+        verbose_name="Статус задачи",
     )
     skill = models.ManyToManyField(
-        Skill,
-        max_length=255, blank=True,
-        verbose_name="Навык"
+        Skill, max_length=255, blank=True, verbose_name="Навык"
     )
     executor = models.ForeignKey(
         User,
@@ -68,7 +76,7 @@ class Task(models.Model):
     )
 
     class Meta:
-        ordering = ("-created_at",)
+        ordering = ("-creator",)
         verbose_name = "Задачa"
         verbose_name_plural = "Задачa"
 
