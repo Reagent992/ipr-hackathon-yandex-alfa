@@ -24,10 +24,10 @@ jobs:
         pip install -r ./requirements.txt 
 
     - name: Run Black formatter
-      run: black --config ./pyproject.toml .
+      run: black --check --diff --config ./pyproject.toml .
 
     - name: Run isort
-      run: isort  --settings-file ./pyproject.toml .
+      run: isort  --check --diff --settings-file ./pyproject.toml .
 
     - name: Run flake8
-      run: flake8 --config ./setup.cfg .
+      run: flake8 --verbose --config ./setup.cfg .
