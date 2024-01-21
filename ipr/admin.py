@@ -1,6 +1,6 @@
-from models import IPR
-
 from django.contrib import admin
+
+from models import IPR
 
 
 @admin.register(IPR)

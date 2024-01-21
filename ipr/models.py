@@ -54,6 +54,12 @@ class IPR(models.Model):
         on_delete=models.CASCADE,
         related_name="comment_ipr",
     )
+    usability = models.PositiveSmallIntegerField(
+        verbose_name="Удобство использования ИПР", default=0
+    )
+    ease_of_creation = models.PositiveSmallIntegerField(
+        verbose_name="Удобство создания ИПР", default=0
+    )
 
     class Meta:
         verbose_name = "ИПР"
