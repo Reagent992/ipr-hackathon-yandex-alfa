@@ -142,3 +142,12 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": "/api/v1/",
     "SCHEMA_PATH_PREFIX_TRIM": True,
 }
+# --------------------------------------------------------------------CONSTANTS
+EMAIL_LENGTH = 254
+NAME_LENGTH = 150
+RESTRICTED_USERNAMES = (
+    "me",
+    "admin",
+    "administrator",
+    "root",
+)

@@ -49,7 +49,7 @@ class UserTestCase(TestCase):
         )
         # -----------------------------------------------------------BOSS-USERS
         self.chief_full_name = "Ilon Mask X"
-        self.chief = User.objects.create(
+        self.chief = User.objects.create_user(
             username="IlonMask",
             email="ilon@example.com",
             first_name="Ilon",
@@ -59,7 +59,7 @@ class UserTestCase(TestCase):
             userpic=self.uploaded,
         )
         self.ceo = "Tim Cook Apple"
-        self.ceo = User.objects.create(
+        self.ceo = User.objects.create_user(
             username="TimCook",
             email="tim@apple.com",
             first_name="Tim",

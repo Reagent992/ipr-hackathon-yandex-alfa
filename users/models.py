@@ -1,26 +1,61 @@
 from typing import Optional
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+
+from users.validators import validate_username_custom
 
 
 class User(AbstractUser):
     """Расширенная модель пользователя."""
 
-    email = models.EmailField(unique=True, db_index=True)
-    last_name = models.CharField(max_length=150, verbose_name="Фамилия")
-    first_name = models.CharField(max_length=150, verbose_name="Имя")
+    email = models.EmailField(
+        "Электронная почта",
+        unique=True,
+        db_index=True,
+    )
+    last_name = models.CharField(
+        "Фамилия",
+        max_length=settings.NAME_LENGTH,
+    )
+    first_name = models.CharField(
+        "Имя",
+        max_length=settings.NAME_LENGTH,
+    )
     patronymic = models.CharField(
-        max_length=150, verbose_name="Отчество", blank=True
+        "Отчество",
+        max_length=settings.NAME_LENGTH,
+        blank=True,
+    )
+    username = models.CharField(
+        "Имя пользователя",
+        max_length=settings.NAME_LENGTH,
+        unique=True,
+        validators=(
+            UnicodeUsernameValidator,
+            validate_username_custom,
+        ),
     )
     userpic = models.ImageField(
-        verbose_name="Аватар пользователя",
+        "Аватар пользователя",
         upload_to="userpic/",
         help_text="Загрузка аватара пользователя",
         blank=True,
+        null=True,
     )
     position = models.CharField(
-        max_length=150, verbose_name="Должность", blank=True
+        "Должность",
+        max_length=settings.NAME_LENGTH,
+        blank=True,
+    )
+    USERNAME_FIELD = "email"
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = (
+        "username",
+        "first_name",
+        "last_name",
     )
 
     class Meta:
@@ -44,7 +79,9 @@ class User(AbstractUser):
 class Team(models.Model):
     """Команда."""
 
-    name = models.CharField(max_length=150, verbose_name="Название команды")
+    name = models.CharField(
+        max_length=settings.NAME_LENGTH, verbose_name="Название команды"
+    )
     boss = models.OneToOneField(
         User,
         on_delete=models.PROTECT,
@@ -58,7 +95,8 @@ class Team(models.Model):
         verbose_name="Участники команды",
     )
     created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name="Дата создания"
+        "Дата создания",
+        auto_now_add=True,
     )
 
     class Meta:
@@ -84,7 +122,8 @@ class MiddleUsersTeams(models.Model):
         related_name="participates",
     )
     joined_at = models.DateTimeField(
-        auto_now_add=True, verbose_name="Дата вступления"
+        "Дата вступления",
+        auto_now_add=True,
     )
 
     class Meta:
