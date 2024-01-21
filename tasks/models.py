@@ -13,12 +13,15 @@ STATUS_CHOICES = (
 )
 
 
-class IPR(models.Model):
-    ...
-
-
 class Skill(models.Model):
-    skill_name = models.CharField(max_length=255)
+    skill_name = models.CharField(max_length=255, verbose_name = "Навык",
+                                  help_text="Введите название навыка",
+                                  )
+
+    class Meta:
+        ordering = ('skill_name',)
+        verbose_name = "Навыки"
+        verbose_name_plural = "Навыки"
 
     def __str__(self):
         return self.skill_name
@@ -42,13 +45,13 @@ class Task(models.Model):
         verbose_name="Создатель задачи",
         related_name="creator_task",
     )
-    creationdate = models.DateField(
+    creation_date = models.DateField(
         auto_now_add=True,
         verbose_name="Дата создания задачи",
     )
-    startdate = models.DateField("Дата начала работ по задаче", null=True,
+    start_date = models.DateField("Дата начала работ по задаче", null=True,
                                   blank=True,)
-    enddate = models.DateField(verbose_name="Дедлайн задачи",  null=True,
+    end_date = models.DateField(verbose_name="Дедлайн задачи",  null=True,
                                 blank=True,)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES,
@@ -57,7 +60,7 @@ class Task(models.Model):
     skill = models.ManyToManyField(
         Skill,
         max_length=255, blank=True,
-        verbose_name="Скилл задачи"
+        verbose_name="Навык"
     )
     executor = models.ForeignKey(
         User,
@@ -65,12 +68,6 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         related_name="executor_task",
     )
-    # ipr = models.ForeignKey(
-    #     IPR,
-    #     verbose_name="ИПР",
-    #     on_delete=models.CASCADE,
-    #     related_name="ipr",
-    # )
 
     class Meta:
         verbose_name = "Задачa"
