@@ -6,6 +6,7 @@ import tempfile
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db import IntegrityError
 from django.test import TestCase, override_settings
 
 from users.models import Team
@@ -144,21 +145,10 @@ class UserTestCase(TestCase):
             "Не совпадает количество команд",
         )
 
-    def test_django_signal(self):
-        """
-        Руководитель автоматически назначается участником своей команды.
-        """
-        self.assertTrue(
-            self.low_team.users.filter(id=self.chief.id).exists(),
-            f"Пользователь {self.chief} не состоит в команде {self.low_team}",
-        )
-
-    def test_chief_participates_two_teams(self):
-        """chief состоит сразу в двух командах."""
-        self.assertTrue(
-            self.low_team.users.filter(id=self.chief.id).exists()
-            and self.big_team.users.filter(id=self.chief.id).exists()
-        )
+    def test_user_cant_parcipate_in_two_teams(self):
+        """Пользователь не может присоединиться к двум командам."""
+        with self.assertRaises(IntegrityError):
+            self.big_team.users.add(self.user)
 
     def test_user_participates_in_one_team(self):
         """Пользователь состоит в команде."""

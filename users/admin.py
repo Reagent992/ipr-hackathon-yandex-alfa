@@ -10,8 +10,11 @@ admin.site.unregister(Group)
 
 
 class MiddleUsersTeamsInline(admin.TabularInline):
+    """Дополнительное поле для добавления участников в команду."""
+
     model = MiddleUsersTeams
     extra = 1
+    autocomplete_fields = ("user",)
 
 
 @admin.register(Team)
@@ -48,7 +51,8 @@ class UserAdmin(admin.ModelAdmin):
     )
     list_display = (
         "name",
-        "team",
+        "position",
+        "team_name",
         "email",
         "userpic_thumbnail",
     )
@@ -64,11 +68,12 @@ class UserAdmin(admin.ModelAdmin):
 
     @admin.display(description="ФИО")
     def name(self, obj: User) -> str:
+        """ФИО пользователя."""
         return obj.get_full_name()
 
     @admin.display(description="Аватар")
     def userpic_thumbnail(self, obj: User):
-        """Поле с иконкой картинки."""
+        """Малый аватар в общем списке пользователей."""
         return (
             mark_safe(f'<img src={obj.userpic.url} width="80">')
             if obj.userpic
@@ -77,10 +82,13 @@ class UserAdmin(admin.ModelAdmin):
 
     @admin.display(description="Текущий аватар")
     def image_preview(self, obj: User):
-        if obj.userpic:
-            return mark_safe(f'<img src="{obj.userpic.url}" />')
-        return "Аватар не загружен."
+        """Большой аватар в редактирование пользователя."""
+        return (
+            mark_safe(f'<img src="{obj.userpic.url}" width="275">')
+            if obj.userpic
+            else "Аватар не загружен."
+        )
 
     @admin.display(description="Команда")
-    def team(self, user: User) -> Optional[str]:
-        return user.get_last_team_name()
+    def team_name(self, user: User) -> Optional[str]:
+        return user.get_team().name if user.get_team() else None
