@@ -15,7 +15,9 @@ class TaskAdmin(admin.ModelAdmin):
     )
 
     def display_skills(self, obj):
-        return ", ".join([skill.skill_name for skill in obj.skill.all()])
+        return ", ".join(
+            [skill.skill_name for skill in obj.skill.all() if skill]
+        )
 
 
 class SkillAdmin(admin.ModelAdmin):
