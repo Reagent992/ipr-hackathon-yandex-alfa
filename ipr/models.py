@@ -4,21 +4,13 @@ from django.db import models
 User = get_user_model()
 
 STATUSES = [
-    "Отсутствует",
-    "Выполнен",
-    "Не выполнен",
-    "В работе",
-    "Отменен",
-    "Отстает",
+    ("STATUS_ABSENT", "Отсутствует"),
+    ("STATUS_COMPLETED", "Выполнен"),
+    ("STATUS_NOT_COMPLETED", "Не выполнен"),
+    ("STATUS_IN_PROGRESS", "В работе"),
+    ("STATUS_CANCELLED", "Отменен"),
+    ("STATUS_DELAYED", "Отстает"),
 ]
-
-
-class Task(models.Model):
-    pass
-
-
-class Comment(models.Model):
-    pass
 
 
 class IPR(models.Model):
@@ -28,11 +20,9 @@ class IPR(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Создатель ИПР",
-        related_name="creator_ipr",
+        related_name="created_ipr",
     )
-    creation_date = models.DateField(
-        "Дата создания ИПР", auto_now=True, auto_now_add=True
-    )
+    creation_date = models.DateField("Дата создания ИПР", auto_now_add=True)
     start_date = models.DateField("Дата начала работ по ИПР")
     end_date = models.DateField("Дедлайн ИПР")
     status = models.CharField("Статус ИПР", max_length=20, choices=STATUSES)
@@ -40,19 +30,7 @@ class IPR(models.Model):
         User,
         verbose_name="Исполнитель ИПР",
         on_delete=models.CASCADE,
-        related_name="executor_ipr",
-    )
-    task = models.ForeignKey(
-        Task,
-        verbose_name="Задача",
-        on_delete=models.CASCADE,
-        related_name="task_ipr",
-    )
-    comment = models.ForeignKey(
-        Comment,
-        verbose_name="Комментарий к ИПР",
-        on_delete=models.CASCADE,
-        related_name="comment_ipr",
+        related_name="ipr",
     )
     usability = models.PositiveSmallIntegerField(
         verbose_name="Удобство использования ИПР", default=0

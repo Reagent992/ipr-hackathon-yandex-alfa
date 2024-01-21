@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import IPR
+from .models import IPR
 
 
 @admin.register(IPR)
@@ -14,10 +14,8 @@ class IPRAdmin(admin.ModelAdmin):
         "end_date",
         "status",
         "executor",
-        "task",
-        "comment",
     )
-    search_fields = ("title", "task", "executor", "author", "comment")
+    search_fields = ("title", "executor", "author")
     list_filter = (
         "creation_date",
         "start_date",
