@@ -25,11 +25,9 @@ jobs:
 
     - name: Run Black formatter
       run: black --check --diff --config ./pyproject.toml .
-      continue-on-error: true
 
     - name: Run isort
       run: isort  --check --diff --settings-file ./pyproject.toml .
-      continue-on-error: true
 
     - name: Run flake8
       run: flake8 --verbose --config ./setup.cfg .
