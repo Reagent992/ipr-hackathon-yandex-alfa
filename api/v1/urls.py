@@ -6,7 +6,10 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
+from api.v1.views.task import TaskViewSet
+
 v1_router = routers.DefaultRouter()
+v1_router.register('tasks', TaskViewSet, basename='tasks')
 
 urlpatterns = [
     path("", include(v1_router.urls)),
