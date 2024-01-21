@@ -1,21 +1,31 @@
-# import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 
 User = get_user_model()
 
+STATUS_CHOICES = (
+    ("none", "Отсутствует"),
+    ("complete", "Выполнен"),
+    ("not_complete", "Не выполнен"),
+    ("in_progress", "В работе"),
+    ("cancel", "Отменен"),
+    ("trail", "Отстает"),
+)
+
+
+class IPR(models.Model):
+    ...
+
+
+class Skill(models.Model):
+    skill_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.skill_name
+
 
 class Task(models.Model):
     """Модель задачи."""
-    STATUS_CHOICES = (
-        ("none", "Отсутствует"),
-        ("complete", "Выполнен"),
-        ("not_complete", "Не выполнен"),
-        ("in_progress", "В работе"),
-        ("cancel", "Отменен"),
-        ("trail", "Отстает"),
-    )
-
     name = models.CharField(
         max_length=100,
         verbose_name="Название задачи",
@@ -30,7 +40,7 @@ class Task(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Создатель задачи",
-        related_name="creator_ipr",
+        related_name="creator_task",
     )
     creationdate = models.DateField(
         auto_now_add=True,
@@ -44,10 +54,10 @@ class Task(models.Model):
         max_length=20, choices=STATUS_CHOICES,
         default=STATUS_CHOICES[0][1], verbose_name="Статус задачи"
     )
-    type = models.CharField(
-        max_length=200,
-        verbose_name="Тип задачи",
-        help_text="Выберите тип задачи",
+    skill = models.ManyToManyField(
+        Skill,
+        max_length=255, blank=True,
+        verbose_name="Скилл задачи"
     )
     executor = models.ForeignKey(
         User,
@@ -55,6 +65,12 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         related_name="executor_task",
     )
+    # ipr = models.ForeignKey(
+    #     IPR,
+    #     verbose_name="ИПР",
+    #     on_delete=models.CASCADE,
+    #     related_name="ipr",
+    # )
 
     class Meta:
         verbose_name = "Задачa"
