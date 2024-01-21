@@ -32,8 +32,10 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
