@@ -1,6 +1,12 @@
 # Backend Проекта "ИПР". Хакатон Яндекс-Альфа-Банк. Команда №8
 
-Тут описаны технические моменты backend.
+![GitHub Actions](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/blob/main/.github/workflows/code-style.yml/badge.svg)\
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+
+TO-DO: Описание проекта.
 
 ## [Репозиторий Frontend](https://github.com/NataliyaNikulshina/ipr-hackathon-yandex-alfa)
 
@@ -32,6 +38,10 @@
 
 - В начале требует активации хуков `pre-commit install`
 - Далее будет запускаться при попытке сделать commit или при запуске `pre-commit`
+
+## Запуск проекта
+
+### 1. Требуется заполнить `.env` файл, пример заполнения находится в `.envexample`
 
 ## Авторы
 
