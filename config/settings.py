@@ -33,7 +33,10 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "ipr.apps.IprConfig",
+    "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -109,10 +112,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 #  -------------------------------------------------------------CUSTOM SETTINGS
 
 MEDIA_URL = "/media/"

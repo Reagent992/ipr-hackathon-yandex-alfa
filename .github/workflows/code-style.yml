@@ -1,0 +1,33 @@
+name: Code-style workflow
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12",]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./requirements.txt 
+
+    - name: Run Black formatter
+      run: black --check --diff --config ./pyproject.toml .
+
+    - name: Run isort
+      run: isort  --check --diff --settings-file ./pyproject.toml .
+
+    - name: Run flake8
+      run: flake8 --verbose --config ./setup.cfg .
