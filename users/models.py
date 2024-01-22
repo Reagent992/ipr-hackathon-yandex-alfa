@@ -75,6 +75,10 @@ class User(AbstractUser):
         """Возвращает команду пользователя, если она существует."""
         return self.team.first() if self.team.exists() else None
 
+    def is_boss(self) -> bool:
+        """Является ли пользователь руководителем команды."""
+        return hasattr(self, "managed_team") and self.managed_team is not None
+
 
 class Team(models.Model):
     """Команда."""

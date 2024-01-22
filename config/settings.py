@@ -7,11 +7,12 @@ from environs import Env
 env = Env()
 env.read_env()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# ---------------------------------------------------------LOAD ENVIRONMENT VAR
 SECRET_KEY = env.str("SECRET_KEY")
-
+USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
+# -----------------------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -66,13 +67,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if USE_POSTGRESQL:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT"),
+        }
     }
-}
-
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -113,34 +125,37 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "PAGE_SIZE": 6,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        # TODO: К релизу возможно стоит убрать лишнюю Auth.
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-if DEBUG:
-    SIMPLE_JWT = {
-        "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-        "AUTH_HEADER_TYPES": ("Bearer",),
-    }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 # --------------------------------------------------------------DJOSER SETTINGS
 
 DJOSER = {
     "LOGIN_FIELD": "email",
     # TODO: "PERMISSIONS": {},
+    "SERIALIZERS": {
+        "current_user": "api.v1.serializers.api.users_serializer.CustomUserSerializer",
+    },
+    "HIDE_USERS": False,
 }
 
 # -------------------------------------------------------------ALTER USER MODEL
 SPECTACULAR_SETTINGS = {
     "TITLE": "IPR API",
-    "DESCRIPTION": "Проект ИПР.",
-    "VERSION": "1.0.0",
+    "DESCRIPTION": (
+        "API-Документация для SPA-приложения ИПР.<br>"
+        "Хакатон Яндекс-Практикум/Альфа-Банк 2024. Команда № 8."
+    ),
+    "VERSION": "0.1.0",
     "SCHEMA_PATH_PREFIX": "/api/v1/",
-    "SCHEMA_PATH_PREFIX_TRIM": True,
 }
 # --------------------------------------------------------------------CONSTANTS
 EMAIL_LENGTH = 254
