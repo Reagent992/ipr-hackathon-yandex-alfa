@@ -13,7 +13,9 @@ class TaskAdmin(admin.ModelAdmin):
         "status",
         "display_skills",
     )
+    filter_horizontal = ("skill",)
 
+    @admin.display(description="Навыки")
     def display_skills(self, obj):
         return ", ".join(
             [skill.skill_name for skill in obj.skill.all() if skill]
