@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from ipr.models import IPR
+
 User = get_user_model()
 
 
@@ -74,11 +76,18 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         related_name="tasks",
     )
+    ipr = models.ForeignKey(
+        IPR,
+        verbose_name="ИПР",
+        on_delete=models.CASCADE,
+        related_name="tasks",
+        null=True,
+    )
 
     class Meta:
         ordering = ("-creator",)
-        verbose_name = "Задачa"
-        verbose_name_plural = "Задачa"
+        verbose_name = "Задача"
+        verbose_name_plural = "Задачи"
 
     def __str__(self):
         return self.name
