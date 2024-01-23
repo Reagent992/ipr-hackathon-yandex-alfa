@@ -118,3 +118,6 @@ if DEBUG:
         "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "AUTH_HEADER_TYPES": ("Bearer",),
     }
+
+
+MAX_LEN_COMMENT_TEXT = 200

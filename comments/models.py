@@ -1,9 +1,8 @@
+from django.conf import settings
 from django.db import models
 from ipr.models import IPR
 from task.models import Task
 from users.models import User
-
-from core.enums import Limits
 
 
 class Comment(models.Model):
@@ -28,7 +27,7 @@ class Comment(models.Model):
 
     text = models.TextField(
         verbose_name="Комментарий",
-        max_length=Limits.MAX_LEN_COMMENT_TEXT,
+        max_length=settings.MAX_LEN_COMMENT_TEXT,
     )
 
     created_at = models.DateField(
