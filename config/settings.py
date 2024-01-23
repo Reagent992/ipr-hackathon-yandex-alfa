@@ -33,10 +33,10 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "comments.apps.CommentsConfig",
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
-
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -135,6 +135,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
@@ -164,6 +165,7 @@ SPECTACULAR_SETTINGS = {
 # --------------------------------------------------------------------CONSTANTS
 EMAIL_LENGTH = 254
 NAME_LENGTH = 150
+MAX_LEN_COMMENT_TEXT = 200
 RESTRICTED_USERNAMES = (
     "me",
     "admin",
