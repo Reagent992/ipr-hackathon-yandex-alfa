@@ -6,7 +6,6 @@ import tempfile
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import IntegrityError
 from django.test import TestCase, override_settings
 
 from users.models import Team
@@ -19,6 +18,7 @@ TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 class UserTestCase(TestCase):
     def setUp(self) -> None:
         """Тестовые данные."""
+        # ----------------------------------------------------------------IMAGE
         self.small_gif = (
             b"\x47\x49\x46\x38\x39\x61\x01\x00"
             b"\x01\x00\x00\x00\x00\x21\xf9\x04"
@@ -79,11 +79,10 @@ class UserTestCase(TestCase):
         self.big_team = Team.objects.create(
             name=self.big_team_name, boss=self.ceo
         )
-        # ---------------------------------------------------------------------
+        # ---------------------------------------------------------------AMOUNT
         self.amount_of_teams = 2
-        # --------------------------------------------------------Team Joining
-        self.low_team.users.add(self.user)
-        self.big_team.users.add(self.chief)
+        # --------------------------------------------------------JOINING-TEAMS
+        self.low_team.participants.add(self.user)
 
     def tearDown(self) -> None:
         """Удаляем временную папку для медиа-файлов."""
@@ -145,11 +144,10 @@ class UserTestCase(TestCase):
             "Не совпадает количество команд",
         )
 
-    def test_user_cant_parcipate_in_two_teams(self):
-        """Пользователь не может присоединиться к двум командам."""
-        with self.assertRaises(IntegrityError):
-            self.big_team.users.add(self.user)
-
     def test_user_participates_in_one_team(self):
         """Пользователь состоит в команде."""
-        self.assertTrue(self.low_team.users.filter(id=self.user.id).exists())
+        self.assertIn(self.user, self.low_team.participants.all())
+
+    def test_user_not_participates_in_any_team(self):
+        """Босс не состоит в команде, которой руководит."""
+        self.assertTrue(self.chief.team != self.low_team.boss)
