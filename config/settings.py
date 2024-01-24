@@ -8,7 +8,10 @@ env = Env()
 env.read_env()
 
 # ---------------------------------------------------------LOAD ENVIRONMENT VAR
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = env.str(
+    "SECRET_KEY",
+    default="django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167",
+)
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
 # -----------------------------------------------------------------------------
@@ -30,6 +33,7 @@ THIRD_PARTY_APPS = [
     "djoser",
     "django_filters",
     "drf_spectacular",
+    "notifications",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
@@ -37,6 +41,7 @@ LOCAL_APPS = [
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+    "core.apps.CoreConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

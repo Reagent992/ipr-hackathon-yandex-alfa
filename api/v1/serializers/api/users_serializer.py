@@ -20,4 +20,5 @@ class CustomUserSerializer(UserSerializer):
             "date_joined",
             "last_login",
             "userpic",
+            "get_team_id",
         )
