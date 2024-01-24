@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  static:
+  media:
+
+services:
+  backend:
+    build: .
+    env_file: .env
+    volumes:
+      - static:/app/static
+      - media:/app/media
+  gateway:
+    depends_on:
+      - backend
+    build: ./nginx/
+    env_file: .env
+    ports:
+      - "80:80"
+    volumes:
+      - static:/static
+      - media:/media

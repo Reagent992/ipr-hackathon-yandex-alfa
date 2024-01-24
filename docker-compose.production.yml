@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  static:
+  media:
+
+services:
+  backend:
+    image: reamisd/backend_ipr:latest
+    env_file: .env
+    volumes:
+      - static:/app/static
+      - media:/app/media
+  gateway:
+    depends_on:
+      - backend
+    image: reamisd/gateway_ipr:latest
+    env_file: .env
+    ports:
+      - "8000:80"
+    volumes:
+      - static:/static
+      - media:/media
