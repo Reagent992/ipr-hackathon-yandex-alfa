@@ -1,6 +1,6 @@
 # Backend Проекта "ИПР". Хакатон Яндекс-Альфа-Банк. Команда №8
 
-![GitHub Actions](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/blob/main/.github/workflows/code-style.yml/badge.svg)\
+![Code-Style](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/code-style.yml/badge.svg)\
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -14,6 +14,7 @@ TO-DO: Описание проекта.
 
 Пример адреса на запущенном сервере:
 
+- Файл Open-api.yml находится в папке docs
 - <http://127.0.0.1:8000/api/v1/swagger/>
 - <http://127.0.0.1:8000/api/v1/redoc/>
 
