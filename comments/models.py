@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db import models
+
 from ipr.models import IPR
-from task.models import Task
+from tasks.models import Task
 from users.models import User
 
 
