@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -17,7 +18,7 @@ class TaskStatus(models.TextChoices):
 
 class Skill(models.Model):
     skill_name = models.CharField(
-        max_length=255,
+        max_length=settings.SKILL_LEN,
         verbose_name="Навык",
     )
 
@@ -34,11 +35,13 @@ class Task(models.Model):
     """Модель задачи."""
 
     name = models.CharField(
-        max_length=100,
+        max_length=settings.NAME_LENGTH,
         verbose_name="Название задачи",
     )
     description = models.CharField(
-        max_length=500,
+        max_length=settings.DESCRIPTION_LEN,
+        null=True,
+        blank=True,
         verbose_name="Описание задачи",
     )
     creator = models.ForeignKey(
@@ -53,13 +56,9 @@ class Task(models.Model):
     )
     start_date = models.DateField(
         verbose_name="Дата начала работ по задаче",
-        null=True,
-        blank=True,
     )
     end_date = models.DateField(
         verbose_name="Дедлайн задачи",
-        null=True,
-        blank=True,
     )
     status = models.CharField(
         max_length=20,
@@ -68,13 +67,13 @@ class Task(models.Model):
         verbose_name="Статус задачи",
     )
     skill = models.ManyToManyField(
-        Skill, max_length=255, blank=True, verbose_name="Навык"
+        Skill, max_length=settings.SKILL_LEN, verbose_name="Навык"
     )
     executor = models.ForeignKey(
         User,
         verbose_name="Исполнитель задачи",
         on_delete=models.CASCADE,
-        related_name="tasks",
+        related_name="task_executor",
     )
     ipr = models.ForeignKey(
         IPR,
@@ -86,8 +85,8 @@ class Task(models.Model):
 
     class Meta:
         ordering = ("-creator",)
-        verbose_name = "Задача"
-        verbose_name_plural = "Задачи"
+        verbose_name = "Задачa"
+        verbose_name_plural = "Задачa"
 
     def __str__(self):
         return self.name

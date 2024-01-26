@@ -37,6 +37,7 @@ LOCAL_APPS = [
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+    "ratings.apps.RatingsConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -166,9 +167,18 @@ SPECTACULAR_SETTINGS = {
 EMAIL_LENGTH = 254
 NAME_LENGTH = 150
 MAX_LEN_COMMENT_TEXT = 200
+DESCRIPTION_LEN = 500
+SKILL_LEN = 255
 RESTRICTED_USERNAMES = (
     "me",
     "admin",
     "administrator",
     "root",
 )
+RATING_CHOICES = (
+        (1, "1 звезда"),
+        (2, "2 звезды"),
+        (3, "3 звезды"),
+        (4, "4 звезды"),
+        (5, "5 звезд"),
+    )
