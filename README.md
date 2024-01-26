@@ -29,7 +29,8 @@ TO-DO: Описание проекта.
 | [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/index.html) | Генератор документации и Swagger для API в Django. |
 | [Djoser](https://pypi.org/project/djoser/) | Библиотека для обеспечения аутентификации в приложениях Django. |
 | [Pillow](https://pypi.org/project/pillow/) | Библиотека для обработки изображений в Python. |
-| [Django filter](https://pypi.org/project/django-filter/) | Библиотека для легкой фильтрации данных в приложениях Django. |
+| [Django filter](https://pypi.org/project/django-filter/) | Библиотека для фильтрации данных в приложениях Django. |
+| [Django Notifications](https://github.com/django-notifications/django-notifications) | Уведомления. |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте. |
 
 ## Code-Style
