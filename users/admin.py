@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
+from rest_framework.authtoken.models import TokenProxy
 
-from users.models import Team, User
+from users.models import Position, Team, User
 
+admin.site.unregister(TokenProxy)
 admin.site.unregister(Group)
 
 
@@ -77,3 +79,10 @@ class UserAdmin(admin.ModelAdmin):
             if obj.userpic
             else "Аватар не загружен."
         )
+
+
+@admin.register(Position)
+class PositionAdmin(admin.ModelAdmin):
+    """Должности сотрудников."""
+
+    list_display = ("name",)

@@ -39,15 +39,16 @@ class User(AbstractUser):
     userpic = models.ImageField(
         "Аватар пользователя",
         upload_to="userpic/",
-        help_text="Загрузка аватара пользователя",
         blank=True,
         null=True,
     )
-    position = models.CharField(
-        "Должность",
-        max_length=settings.NAME_LENGTH,
-        blank=True,
+    position = models.ForeignKey(
+        "Position",
+        on_delete=models.SET_NULL,
+        verbose_name="Должность",
+        related_name="employees",
         null=True,
+        blank=True,
     )
     team = models.ForeignKey(
         "Team",
@@ -103,6 +104,21 @@ class Team(models.Model):
         ordering = ("-created_at",)
         verbose_name = "Команда"
         verbose_name_plural = "Команды"
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Position(models.Model):
+    """Должность."""
+
+    name = models.CharField(
+        max_length=settings.NAME_LENGTH, verbose_name="Название должности"
+    )
+
+    class Meta:
+        verbose_name = "Должность"
+        verbose_name_plural = "Должности"
 
     def __str__(self) -> str:
         return self.name

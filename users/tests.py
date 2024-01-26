@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 
-from users.models import Team
+from users.models import Position, Team
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -29,6 +29,10 @@ class UserTestCase(TestCase):
         self.uploaded = SimpleUploadedFile(
             name="small.gif", content=self.small_gif, content_type="image/gif"
         )
+        # -----------------------------------------------------POSITIONS-CREATE
+        self.basic_position = Position.objects.create(name="Basic")
+        self.advanced_position = Position.objects.create(name="Advanced")
+        self.pro_position = Position.objects.create(name="Pro")
         # ----------------------------------------------------------CASUAL-USER
         self.username = "".join(
             random.choices(string.ascii_letters + string.digits, k=10)
@@ -37,14 +41,13 @@ class UserTestCase(TestCase):
         self.user_first_name = "John"
         self.user_patronymic = "Smith"
         self.user_full_name = "Doe John Smith"
-        self.position = "Developer"
         self.user = User.objects.create_user(
             username=self.username,
             email=f"{self.username}@example.com",
             last_name=self.user_last_name,
             first_name=self.user_first_name,
             patronymic=self.user_patronymic,
-            position=self.position,
+            position=self.basic_position,
             userpic=self.uploaded,
         )
         # -----------------------------------------------------------BOSS-USERS
@@ -55,7 +58,7 @@ class UserTestCase(TestCase):
             first_name="Ilon",
             last_name="Mask",
             patronymic="X",
-            position="Low CEO",
+            position=self.advanced_position,
             userpic=self.uploaded,
         )
         self.ceo = "Tim Cook Apple"
@@ -65,7 +68,7 @@ class UserTestCase(TestCase):
             first_name="Tim",
             last_name="Cook",
             patronymic="Apple",
-            position="Big CEO",
+            position=self.pro_position,
             userpic=self.uploaded,
         )
         # ---------------------------------------------------------------------
