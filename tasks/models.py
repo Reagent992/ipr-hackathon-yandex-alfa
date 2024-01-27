@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -7,9 +8,7 @@ User = get_user_model()
 
 
 class TaskStatus(models.TextChoices):
-    NONE = "none", "Отсутствует"
     COMPLETE = "complete", "Выполнен"
-    NOT_COMPLETE = "not_complete", "Не выполнен"
     IN_PROGRESS = "in_progress", "В работе"
     CANCEL = "cancel", "Отменен"
     TRAIL = "trail", "Отстает"
@@ -17,7 +16,7 @@ class TaskStatus(models.TextChoices):
 
 class Skill(models.Model):
     skill_name = models.CharField(
-        max_length=255,
+        max_length=settings.SKILL_LEN,
         verbose_name="Навык",
     )
 
@@ -34,11 +33,13 @@ class Task(models.Model):
     """Модель задачи."""
 
     name = models.CharField(
-        max_length=100,
+        max_length=settings.NAME_LENGTH,
         verbose_name="Название задачи",
     )
     description = models.CharField(
-        max_length=500,
+        max_length=settings.DESCRIPTION_LEN,
+        null=True,
+        blank=True,
         verbose_name="Описание задачи",
     )
     creator = models.ForeignKey(
@@ -53,22 +54,18 @@ class Task(models.Model):
     )
     start_date = models.DateField(
         verbose_name="Дата начала работ по задаче",
-        null=True,
-        blank=True,
     )
     end_date = models.DateField(
         verbose_name="Дедлайн задачи",
-        null=True,
-        blank=True,
     )
     status = models.CharField(
         max_length=20,
         choices=TaskStatus,
-        default=TaskStatus.NONE,
+        default=TaskStatus.IN_PROGRESS,
         verbose_name="Статус задачи",
     )
     skill = models.ManyToManyField(
-        Skill, max_length=255, blank=True, verbose_name="Навык"
+        Skill, max_length=settings.SKILL_LEN, verbose_name="Навык"
     )
     executor = models.ForeignKey(
         User,
@@ -86,7 +83,7 @@ class Task(models.Model):
 
     class Meta:
         ordering = ("-creator",)
-        verbose_name = "Задача"
+        verbose_name = "Задачи"
         verbose_name_plural = "Задачи"
 
     def __str__(self):
