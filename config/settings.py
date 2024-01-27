@@ -8,7 +8,10 @@ env = Env()
 env.read_env()
 
 # ---------------------------------------------------------LOAD ENVIRONMENT VAR
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = env.str(
+    "SECRET_KEY",
+    default="django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167",
+)
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
 # -----------------------------------------------------------------------------
@@ -30,6 +33,7 @@ THIRD_PARTY_APPS = [
     "djoser",
     "django_filters",
     "drf_spectacular",
+    "notifications",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
@@ -37,6 +41,7 @@ LOCAL_APPS = [
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+    "core.apps.CoreConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -118,40 +123,35 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #  -------------------------------------------------------------CUSTOM SETTINGS
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.User"
 # -----------------------------------------------------------------DRF SETTINGS
-
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "PAGE_SIZE": 6,
+    "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-
+# Выключено предупреждение об отсутствие DEFAULT_PAGINATION_CLASS
+SILENCED_SYSTEM_CHECKS = ["rest_framework.W001"]
+# Время жизни токена увеличено, для упрощения тестирования.
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("Bearer",),
 }
-
 # --------------------------------------------------------------DJOSER SETTINGS
-
 DJOSER = {
     "LOGIN_FIELD": "email",
-    # TODO: "PERMISSIONS": {},
     "SERIALIZERS": {
         "current_user": "api.v1.serializers.api.users_serializer.CustomUserSerializer",
     },
     "HIDE_USERS": False,
 }
-
 # -------------------------------------------------------------ALTER USER MODEL
 SPECTACULAR_SETTINGS = {
     "TITLE": "IPR API",
@@ -161,6 +161,7 @@ SPECTACULAR_SETTINGS = {
     ),
     "VERSION": "0.1.0",
     "SCHEMA_PATH_PREFIX": "/api/v1/",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 # --------------------------------------------------------------------CONSTANTS
 EMAIL_LENGTH = 254

@@ -1,20 +1,12 @@
-from typing import Optional
-
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
+from rest_framework.authtoken.models import TokenProxy
 
-from users.models import MiddleUsersTeams, Team, User
+from users.models import Position, Team, User
 
+admin.site.unregister(TokenProxy)
 admin.site.unregister(Group)
-
-
-class MiddleUsersTeamsInline(admin.TabularInline):
-    """Дополнительное поле для добавления участников в команду."""
-
-    model = MiddleUsersTeams
-    extra = 1
-    autocomplete_fields = ("user",)
 
 
 @admin.register(Team)
@@ -32,7 +24,6 @@ class TeamAdmin(admin.ModelAdmin):
         "boss__first_name",
         "boss__patronymic",
     )
-    inlines = [MiddleUsersTeamsInline]
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     autocomplete_fields = ("boss",)
@@ -52,7 +43,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "position",
-        "team_name",
+        "team",
         "email",
         "userpic_thumbnail",
     )
@@ -89,6 +80,9 @@ class UserAdmin(admin.ModelAdmin):
             else "Аватар не загружен."
         )
 
-    @admin.display(description="Команда")
-    def team_name(self, user: User) -> Optional[str]:
-        return user.get_team().name if user.get_team() else None
+
+@admin.register(Position)
+class PositionAdmin(admin.ModelAdmin):
+    """Должности сотрудников."""
+
+    list_display = ("name",)
