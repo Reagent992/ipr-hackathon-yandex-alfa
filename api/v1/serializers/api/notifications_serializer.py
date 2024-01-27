@@ -9,6 +9,10 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     recipient = CustomUserSerializer(read_only=True, many=False)
     actor = CustomUserSerializer(read_only=True, many=False)
+    target_object_id = serializers.IntegerField(read_only=True)
+    target_content_type = serializers.CharField(
+        source="target.__class__.__name__", read_only=True
+    )
 
     class Meta:
         model = Notification
@@ -16,6 +20,8 @@ class NotificationSerializer(serializers.ModelSerializer):
             "id",
             "verb",
             "unread",
+            "target_object_id",
+            "target_content_type",
             "timestamp",
             "recipient",
             "actor",
