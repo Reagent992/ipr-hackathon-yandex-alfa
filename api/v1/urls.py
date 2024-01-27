@@ -6,8 +6,8 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
-from api.v1.views.ratings_view import IPRRatingCreateView, TaskRatingCreateView
 from api.v1.views.notifications_view import NotificationViewSet
+from api.v1.views.ratings_view import IPRRatingCreateView, TaskRatingCreateView
 from api.v1.views.task import TaskViewSet
 from api.v1.views.users_view import UserViewSet
 
