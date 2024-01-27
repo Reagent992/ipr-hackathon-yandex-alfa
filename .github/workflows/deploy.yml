@@ -1,11 +1,14 @@
 name: ipr deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 
 jobs:
   build_backend_and_push_to_docker_hub:
-    if: github.ref == 'refs/heads/feature/cd-deploy'
+    if: github.ref == 'refs/heads/main'
     name: Push Docker image to DockerHub
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +30,7 @@ jobs:
           tags: ${{ secrets.DOCKER_NICKNAME }}/backend_ipr:latest
 
   deploy:
-    if: github.ref == 'refs/heads/feature/cd-deploy'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs:
       - build_backend_and_push_to_docker_hub
