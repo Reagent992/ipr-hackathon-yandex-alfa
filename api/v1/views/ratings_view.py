@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from api.v1.serializers.ratings import RatingSerializer
@@ -7,53 +8,36 @@ from ratings.models import Rating
 from tasks.models import Task
 
 
-class TaskRatingCreateView(generics.CreateAPIView, generics.ListAPIView):
+class RatingCreateListView(generics.CreateAPIView, generics.ListAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+    content_model = None
+
+    def get_content_object(self):
+        object_id = self.kwargs.get(f"{self.content_model}_id")
+        return get_object_or_404(self.content_model, id=object_id)
 
     def get_queryset(self):
-        task_id = self.kwargs.get("task_id")
+        content_object = self.get_content_object()
         return Rating.objects.filter(
-            content_type__model="task", object_id=task_id
+            content_type__model=self.content_model, object_id=content_object.id
         )
 
     def post(self, request, *args, **kwargs):
-        task_id = self.kwargs.get("task_id")
-        try:
-            task = Task.objects.get(id=task_id)
-        except Task.DoesNotExist:
-            return Response(
-                {"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND
-            )
+        content_object = self.get_content_object()
 
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(content_object=task, user=self.request.user)
+            serializer.save(
+                content_object=content_object, user=self.request.user
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class IPRRatingCreateView(generics.CreateAPIView, generics.ListAPIView):
-    queryset = Rating.objects.all()
-    serializer_class = RatingSerializer
+class TaskRatingCreateView(RatingCreateListView):
+    content_model = Task
 
-    def get_queryset(self):
-        ipr_id = self.kwargs.get("ipr_id")
-        return Rating.objects.filter(
-            content_type__model="ipr", object_id=ipr_id
-        )
 
-    def post(self, request, *args, **kwargs):
-        ipr_id = self.kwargs.get("ipr_id")
-        try:
-            ipr = IPR.objects.get(id=ipr_id)
-        except IPR.DoesNotExist:
-            return Response(
-                {"error": "IPR not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(content_object=ipr, user=self.request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class IPRRatingCreateView(RatingCreateListView):
+    content_model = IPR

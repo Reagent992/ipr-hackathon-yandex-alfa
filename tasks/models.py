@@ -73,7 +73,7 @@ class Task(models.Model):
         User,
         verbose_name="Исполнитель задачи",
         on_delete=models.CASCADE,
-        related_name="task_executor",
+        related_name="tasks",
     )
     ipr = models.ForeignKey(
         IPR,
@@ -85,8 +85,8 @@ class Task(models.Model):
 
     class Meta:
         ordering = ("-creator",)
-        verbose_name = "Задачa"
-        verbose_name_plural = "Задачa"
+        verbose_name = "Задачи"
+        verbose_name_plural = "Задачи"
 
     def __str__(self):
         return self.name

@@ -16,14 +16,13 @@ class Rating(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     rating = models.IntegerField(choices=settings.RATING_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ("-content_type",)
-        verbose_name = "Оценка"
-        verbose_name_plural = "Оценка"
+        verbose_name = "Оценки"
+        verbose_name_plural = "Оценки"
 
     def __str__(self):
         return f"{self.content_object} - {self.rating} от {self.user}"
