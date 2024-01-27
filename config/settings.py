@@ -20,12 +20,10 @@ DB_USER = env.str("POSTGRES_USER", default="username")
 DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
 DB_HOST = env.str("DB_HOST", default="db")
 DB_PORT = env.int("DB_PORT", default=5432)
-CORS_ALLOWED_ORIGINS = [
-    "https://ipr.ddns.net",
-    "http://ipr.ddns.net",
-    "ipr.ddns.net",
-]
-
+CORS_ALLOWED_ORIGINS = env.list(
+    "CORS_ALLOWED_ORIGINS", default=["localhost:80", "127.0.0.1:80"]
+)
+CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
 # -----------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,6 +43,7 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "drf_spectacular",
     "notifications",
+    "corsheaders",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
@@ -52,6 +51,7 @@ LOCAL_APPS = [
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+    "ratings.apps.RatingsConfig",
     "core.apps.CoreConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -59,6 +59,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -181,9 +182,18 @@ SPECTACULAR_SETTINGS = {
 EMAIL_LENGTH = 254
 NAME_LENGTH = 150
 MAX_LEN_COMMENT_TEXT = 200
+DESCRIPTION_LEN = 500
+SKILL_LEN = 255
 RESTRICTED_USERNAMES = (
     "me",
     "admin",
     "administrator",
     "root",
+)
+RATING_CHOICES = (
+    (1, "1 звезда"),
+    (2, "2 звезды"),
+    (3, "3 звезды"),
+    (4, "4 звезды"),
+    (5, "5 звезд"),
 )
