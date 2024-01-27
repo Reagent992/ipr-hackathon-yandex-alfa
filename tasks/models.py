@@ -8,9 +8,7 @@ User = get_user_model()
 
 
 class TaskStatus(models.TextChoices):
-    NONE = "none", "Отсутствует"
     COMPLETE = "complete", "Выполнен"
-    NOT_COMPLETE = "not_complete", "Не выполнен"
     IN_PROGRESS = "in_progress", "В работе"
     CANCEL = "cancel", "Отменен"
     TRAIL = "trail", "Отстает"
@@ -63,7 +61,7 @@ class Task(models.Model):
     status = models.CharField(
         max_length=20,
         choices=TaskStatus,
-        default=TaskStatus.NONE,
+        default=TaskStatus.IN_PROGRESS,
         verbose_name="Статус задачи",
     )
     skill = models.ManyToManyField(

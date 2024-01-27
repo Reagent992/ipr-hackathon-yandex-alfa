@@ -81,7 +81,7 @@ class TaskModelTest(TestCase):
     def test_task_editing(self):
         new_name = "New Task Name"
         new_description = "New Description for Task"
-        new_status = TaskStatus.NOT_COMPLETE
+        new_status = TaskStatus.COMPLETE
         new_start_date = date(2024, 2, 1)
         new_end_date = date(2024, 2, 10)
 
