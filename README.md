@@ -1,6 +1,6 @@
 # Backend Проекта "ИПР". Хакатон Яндекс-Альфа-Банк. Команда №8
 
-![GitHub Actions](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/blob/main/.github/workflows/code-style.yml/badge.svg)\
+![Code-Style](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/code-style.yml/badge.svg)\
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -29,7 +29,8 @@ TO-DO: Описание проекта.
 | [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/index.html) | Генератор документации и Swagger для API в Django. |
 | [Djoser](https://pypi.org/project/djoser/) | Библиотека для обеспечения аутентификации в приложениях Django. |
 | [Pillow](https://pypi.org/project/pillow/) | Библиотека для обработки изображений в Python. |
-| [Django filter](https://pypi.org/project/django-filter/) | Библиотека для легкой фильтрации данных в приложениях Django. |
+| [Django filter](https://pypi.org/project/django-filter/) | Библиотека для фильтрации данных в приложениях Django. |
+| [Django Notifications](https://github.com/django-notifications/django-notifications) | Уведомления. |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте. |
 
 ## Code-Style
