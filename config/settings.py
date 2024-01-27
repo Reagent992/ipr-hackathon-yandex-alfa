@@ -15,6 +15,17 @@ SECRET_KEY = env.str(
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+DB_NAME = env.str("DB_NAME", default="IPR")
+DB_USER = env.str("POSTGRES_USER", default="username")
+DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
+DB_HOST = env.str("DB_HOST", default="db")
+DB_PORT = env.int("DB_PORT", default=5432)
+CORS_ALLOWED_ORIGINS = [
+    "https://ipr.ddns.net",
+    "http://ipr.ddns.net",
+    "ipr.ddns.net",
+]
+
 # -----------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,11 +90,11 @@ if USE_POSTGRESQL:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME"),
-            "USER": os.getenv("POSTGRES_USER"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-            "HOST": os.getenv("DB_HOST"),
-            "PORT": os.getenv("DB_PORT"),
+            "NAME": DB_NAME,
+            "USER": DB_USER,
+            "PASSWORD": DB_PASSWORD,
+            "HOST": DB_HOST,
+            "PORT": DB_PORT,
         }
     }
 else:
@@ -135,6 +146,8 @@ REST_FRAMEWORK = {
     ],
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

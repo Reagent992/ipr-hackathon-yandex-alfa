@@ -27,7 +27,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_NICKNAME }}/ipr_backend:latest
+          tags: ${{ secrets.DOCKER_NICKNAME }}/backend_ipr:latest
 
   build_gateway_and_push_to_docker_hub:
     if: github.ref == 'refs/heads/master'
@@ -48,7 +48,7 @@ jobs:
         with:
           context: ./nginx/
           push: true
-          tags: ${{ secrets.DOCKER_NICKNAME }}/ipr_gateway:latest
+          tags: ${{ secrets.DOCKER_NICKNAME }}/gateway_ipr:latest
 
   deploy:
     if: github.ref == 'refs/heads/master'
@@ -82,4 +82,4 @@ jobs:
           sudo docker compose -f docker-compose.production.yml up -d
           sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
           sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
-          sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /static/static_backend/
+          sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/static/. /static/
