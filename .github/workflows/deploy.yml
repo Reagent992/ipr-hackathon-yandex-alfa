@@ -76,27 +76,10 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
-          cd foodgram
+          cd ipr
           sudo docker compose -f docker-compose.production.yml pull
           sudo docker compose -f docker-compose.production.yml down
           sudo docker compose -f docker-compose.production.yml up -d
           sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
           sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
           sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /static/static_backend/
-
-
-  send_message:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-    - name: Send message
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Deploy complete!
-          Author: ${{ github.actor }}
-          Commit message: ${{ github.event.commits[0].message }}
-          Link: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
