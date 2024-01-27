@@ -1,10 +1,25 @@
+from django.contrib.auth import get_user_model
 from djoser.serializers import UserSerializer
+from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
-from users.models import User
+from users.models import Position
+
+User = get_user_model()
+
+
+class PositionsSerializer(ModelSerializer):
+    """Сериализатор должностей."""
+
+    class Meta:
+        model = Position
+        fields = ("name",)
 
 
 class CustomUserSerializer(UserSerializer):
     """Сериализатор пользователей."""
+
+    position = serializers.CharField(source="position.name", read_only=True)
 
     class Meta:
         model = User
@@ -20,4 +35,5 @@ class CustomUserSerializer(UserSerializer):
             "date_joined",
             "last_login",
             "userpic",
+            "team",
         )

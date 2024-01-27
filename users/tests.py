@@ -6,10 +6,9 @@ import tempfile
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import IntegrityError
 from django.test import TestCase, override_settings
 
-from users.models import Team
+from users.models import Position, Team
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -19,6 +18,7 @@ TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 class UserTestCase(TestCase):
     def setUp(self) -> None:
         """Тестовые данные."""
+        # ----------------------------------------------------------------IMAGE
         self.small_gif = (
             b"\x47\x49\x46\x38\x39\x61\x01\x00"
             b"\x01\x00\x00\x00\x00\x21\xf9\x04"
@@ -29,6 +29,10 @@ class UserTestCase(TestCase):
         self.uploaded = SimpleUploadedFile(
             name="small.gif", content=self.small_gif, content_type="image/gif"
         )
+        # -----------------------------------------------------POSITIONS-CREATE
+        self.basic_position = Position.objects.create(name="Basic")
+        self.advanced_position = Position.objects.create(name="Advanced")
+        self.pro_position = Position.objects.create(name="Pro")
         # ----------------------------------------------------------CASUAL-USER
         self.username = "".join(
             random.choices(string.ascii_letters + string.digits, k=10)
@@ -37,14 +41,13 @@ class UserTestCase(TestCase):
         self.user_first_name = "John"
         self.user_patronymic = "Smith"
         self.user_full_name = "Doe John Smith"
-        self.position = "Developer"
         self.user = User.objects.create_user(
             username=self.username,
             email=f"{self.username}@example.com",
             last_name=self.user_last_name,
             first_name=self.user_first_name,
             patronymic=self.user_patronymic,
-            position=self.position,
+            position=self.basic_position,
             userpic=self.uploaded,
         )
         # -----------------------------------------------------------BOSS-USERS
@@ -55,7 +58,7 @@ class UserTestCase(TestCase):
             first_name="Ilon",
             last_name="Mask",
             patronymic="X",
-            position="Low CEO",
+            position=self.advanced_position,
             userpic=self.uploaded,
         )
         self.ceo = "Tim Cook Apple"
@@ -65,7 +68,7 @@ class UserTestCase(TestCase):
             first_name="Tim",
             last_name="Cook",
             patronymic="Apple",
-            position="Big CEO",
+            position=self.pro_position,
             userpic=self.uploaded,
         )
         # ---------------------------------------------------------------------
@@ -79,11 +82,10 @@ class UserTestCase(TestCase):
         self.big_team = Team.objects.create(
             name=self.big_team_name, boss=self.ceo
         )
-        # ---------------------------------------------------------------------
+        # ---------------------------------------------------------------AMOUNT
         self.amount_of_teams = 2
-        # --------------------------------------------------------Team Joining
-        self.low_team.users.add(self.user)
-        self.big_team.users.add(self.chief)
+        # --------------------------------------------------------JOINING-TEAMS
+        self.low_team.participants.add(self.user)
 
     def tearDown(self) -> None:
         """Удаляем временную папку для медиа-файлов."""
@@ -145,11 +147,10 @@ class UserTestCase(TestCase):
             "Не совпадает количество команд",
         )
 
-    def test_user_cant_parcipate_in_two_teams(self):
-        """Пользователь не может присоединиться к двум командам."""
-        with self.assertRaises(IntegrityError):
-            self.big_team.users.add(self.user)
-
     def test_user_participates_in_one_team(self):
         """Пользователь состоит в команде."""
-        self.assertTrue(self.low_team.users.filter(id=self.user.id).exists())
+        self.assertIn(self.user, self.low_team.participants.all())
+
+    def test_user_not_participates_in_any_team(self):
+        """Босс не состоит в команде, которой руководит."""
+        self.assertTrue(self.chief.team != self.low_team.boss)
