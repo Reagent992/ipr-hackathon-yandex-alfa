@@ -12,10 +12,6 @@ SECRET_KEY = env.str(
     "SECRET_KEY",
     default="django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167",
 )
-SECRET_KEY = env.str(
-    "SECRET_KEY",
-    default="django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167",
-)
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
 # -----------------------------------------------------------------------------
