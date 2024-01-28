@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db.models import CharField, ExpressionWrapper, F, Value
+from django.db.models import F, Value
+from django.db.models.functions import Coalesce, Concat
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet as UserViewSetFromDjoser
 from drf_spectacular.utils import extend_schema, extend_schema_view
@@ -67,14 +68,17 @@ class UserViewSet(UserViewSetFromDjoser):
         queryset = super().get_queryset()
 
         return queryset.annotate(
-            full_name=ExpressionWrapper(
-                F("last_name") + F("first_name") + F("patronymic"),
-                output_field=CharField(),
+            full_name=Coalesce(
+                Concat(
+                    "last_name",
+                    Value(" "),
+                    "first_name",
+                    Value(" "),
+                    "patronymic",
+                ),
+                Value(""),
             ),
-            position_name=ExpressionWrapper(
-                F("position__name") if F("position__name") else Value(""),
-                output_field=CharField(),
-            ),
+            position_name=Coalesce(F("position__name"), Value("")),
         )
 
     @extend_schema(

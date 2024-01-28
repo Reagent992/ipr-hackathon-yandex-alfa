@@ -12,6 +12,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = (
+            "id",
             "name",
             "description",
             "creator",
