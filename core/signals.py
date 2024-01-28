@@ -2,7 +2,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from notifications.signals import notify
 
-from comments.models import Comment
 from ipr.models import IPR
 from tasks.models import Task
 
@@ -11,6 +10,7 @@ from tasks.models import Task
 def created_ipr_notification(sender, instance: IPR, created, **kwargs):
     """Создание уведомления о новом ИПР."""
     if created:
+        # TODO: Улучшить текст
         text = "Вам назначен новый ИПР"
         notify.send(
             sender=instance.creator,
@@ -19,6 +19,7 @@ def created_ipr_notification(sender, instance: IPR, created, **kwargs):
             target=instance,
         )
     else:
+        # TODO: Улучшить текст
         text = "Изменение в ИПР."
         notify.send(
             sender=instance.creator,
@@ -45,19 +46,6 @@ def created_task_notification(sender, instance: Task, created, **kwargs):
         notify.send(
             sender=instance.creator,
             recipient=instance.executor,
-            verb=text,
-            target=instance,
-        )
-
-
-@receiver(post_save, sender=Comment)
-def created_comment_notification(sender, instance: Comment, created, **kwargs):
-    """Создание уведомления о новом комментарии."""
-    if created:
-        text = "Новый комментарий"
-        notify.send(
-            sender=instance.author,
-            recipient=instance.ipr.executor,
             verb=text,
             target=instance,
         )
