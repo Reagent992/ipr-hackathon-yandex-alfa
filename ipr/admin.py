@@ -7,7 +7,6 @@ from .models import IPR
 class IPRAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "description",
         "creator",
         "creation_date",
         "start_date",
