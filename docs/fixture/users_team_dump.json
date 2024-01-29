@@ -1,0 +1,38 @@
+[
+{
+  "model": "users.team",
+  "pk": 1,
+  "fields": {
+    "name": "Front-end разработка",
+    "boss": 2,
+    "created_at": "2024-01-29T15:56:26.086Z"
+  }
+},
+{
+  "model": "users.team",
+  "pk": 2,
+  "fields": {
+    "name": "Аналитика",
+    "boss": 5,
+    "created_at": "2024-01-29T15:58:53.959Z"
+  }
+},
+{
+  "model": "users.team",
+  "pk": 3,
+  "fields": {
+    "name": "Дизайн",
+    "boss": 8,
+    "created_at": "2024-01-29T16:01:22.524Z"
+  }
+},
+{
+  "model": "users.team",
+  "pk": 4,
+  "fields": {
+    "name": "Менеджмент",
+    "boss": 11,
+    "created_at": "2024-01-29T17:01:57.507Z"
+  }
+}
+]
