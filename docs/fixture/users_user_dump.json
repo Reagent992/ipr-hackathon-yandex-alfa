@@ -1,0 +1,212 @@
+[
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$P3zld4RRHnjSMaDEbAP3b6$4VJBhVEeA/3HpR+dNE3aCoV3i/UEEWP2dERDWqE3K+A=",
+    "last_login": "2024-01-28T11:34:32.221Z",
+    "is_superuser": true,
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-01-28T11:32:49.454Z",
+    "email": "superadmin@m-mail.com",
+    "last_name": "Super",
+    "first_name": "Admin",
+    "patronymic": "",
+    "username": "superadmin",
+    "userpic": "",
+    "position": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:43:00.424Z",
+    "email": "sheremetev.boris@idp-test.com",
+    "last_name": "Шереметьев",
+    "first_name": "Борис",
+    "patronymic": "Петрович",
+    "username": "Sheremetev",
+    "userpic": "userpic/01.jpg",
+    "position": "Страший разработчик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:44:06.914Z",
+    "email": "menshikov.aleksandr@idp-test.com",
+    "last_name": "Меньшиков",
+    "first_name": "Александр",
+    "patronymic": "Данилович",
+    "username": "Menshikov",
+    "userpic": "userpic/02.jpg",
+    "position": "Разработчик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 4,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:45:45.736Z",
+    "email": "rumyanceva.mariya@idp-test.com",
+    "last_name": "Румянцева",
+    "first_name": "Мария",
+    "patronymic": "Андреевна",
+    "username": "Rumyanceva",
+    "userpic": "userpic/03.jpg",
+    "position": "Разработчик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 5,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:46:31.229Z",
+    "email": "razumovskij.aleksej@idp-test.com",
+    "last_name": "Разумовский",
+    "first_name": "Алексей",
+    "patronymic": "Григорьевич",
+    "username": "Razumovskij",
+    "userpic": "userpic/04.jpg",
+    "position": "Старший системный аналитик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 6,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:47:05.099Z",
+    "email": "shuvalov.ivan@idp-test.com",
+    "last_name": "Шувалов",
+    "first_name": "Иван",
+    "patronymic": "Иванович",
+    "username": "Shuvalov",
+    "userpic": "userpic/05.jpg",
+    "position": "Системный аналитик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 7,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:48:20.663Z",
+    "email": "kantemir.mariya@idp-test.com",
+    "last_name": "Кантемир",
+    "first_name": "Мария",
+    "patronymic": "Дмитриевна",
+    "username": "Kantemir",
+    "userpic": "userpic/06.jpg",
+    "position": "Младший системный аналитик",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 8,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:48:56.744Z",
+    "email": "orlov.grigorij@idp-test.com",
+    "last_name": "Орлов",
+    "first_name": "Григорий",
+    "patronymic": "Григорьевич",
+    "username": "Orlov",
+    "userpic": "userpic/07.jpg",
+    "position": "Шеф дизайнер",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 9,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:49:47.788Z",
+    "email": "potyomkin.grigorij@idp-test.com",
+    "last_name": "Потёмкин",
+    "first_name": "Григорий",
+    "patronymic": "Александрович",
+    "username": "Potyomkin",
+    "userpic": "userpic/08.jpg",
+    "position": "Дизайнер",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 10,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-28T13:50:16.014Z",
+    "email": "voroncova.elizaveta@idp-test.com",
+    "last_name": "Воронцова",
+    "first_name": "Елизавета",
+    "patronymic": "Романовна",
+    "username": "Voroncova",
+    "userpic": "userpic/09.jpg",
+    "position": "Дизайнер",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
