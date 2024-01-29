@@ -1,0 +1,51 @@
+[
+{
+  "model": "users.position",
+  "pk": 1,
+  "fields": {
+    "name": "Страший разработчик"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 2,
+  "fields": {
+    "name": "Разработчик"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 3,
+  "fields": {
+    "name": "Старший системный аналитик"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 4,
+  "fields": {
+    "name": "Системный аналитик"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 5,
+  "fields": {
+    "name": "Младший системный аналитик"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 6,
+  "fields": {
+    "name": "Шеф дизайнер"
+  }
+},
+{
+  "model": "users.position",
+  "pk": 7,
+  "fields": {
+    "name": "Дизайнер"
+  }
+}
+]
