@@ -38,7 +38,7 @@
     "username": "Sheremetev",
     "userpic": "userpic/01.jpg",
     "position": 1,
-    "team": null,
+    "team": 4,
     "groups": [],
     "user_permissions": []
   }
@@ -104,7 +104,7 @@
     "username": "Razumovskij",
     "userpic": "userpic/04.jpg",
     "position": 3,
-    "team": 2,
+    "team": 4,
     "groups": [],
     "user_permissions": []
   }
@@ -170,7 +170,7 @@
     "username": "Orlov",
     "userpic": "userpic/07.jpg",
     "position": 6,
-    "team": 3,
+    "team": 4,
     "groups": [],
     "user_permissions": []
   }
@@ -215,6 +215,28 @@
     "userpic": "userpic/09.jpg",
     "position": 7,
     "team": 3,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 11,
+  "fields": {
+    "password": "upass",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-01-29T17:01:27.361Z",
+    "email": "romanov.pyotr@idp-test.com",
+    "last_name": "Романов",
+    "first_name": "Пётр",
+    "patronymic": "Алекссевич",
+    "username": "Romanov",
+    "userpic": "userpic/010.jpg",
+    "position": 8,
+    "team": null,
     "groups": [],
     "user_permissions": []
   }

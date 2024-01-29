@@ -47,5 +47,12 @@
   "fields": {
     "name": "Дизайнер"
   }
+},
+{
+  "model": "users.position",
+  "pk": 8,
+  "fields": {
+    "name": "Директор"
+  }
 }
 ]

@@ -1,16 +1,19 @@
-Superadmin
-Login: superadmin@m-mail.com
-Pass: Password
+# Superadmin
+- Login: superadmin@m-mail.com
+- Pass: Password
 
-Пользователи:
-Пароль для всех: upass
+# Пользователи:
+- Пароль для всех: upass
+- 
+# Директор:
+romanov.pyotr@idp-test.com
 
-Руководители команд:
+# Руководители команд:
 sheremetev.boris@idp-test.com
 razumovskij.aleksej@idp-test.com
 orlov.grigorij@idp-test.com
 
-Сотрудники:
+# Сотрудники:
 menshikov.aleksandr@idp-test.com
 rumyanceva.mariya@idp-test.com
 shuvalov.ivan@idp-test.com
