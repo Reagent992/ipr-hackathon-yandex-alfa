@@ -1,0 +1,114 @@
+[
+{
+  "model": "ipr.ipr",
+  "pk": 1,
+  "fields": {
+    "title": "Senior Front-end разработчик",
+    "description": "Индивидуальный план развития до Senior Frontend-разработчика",
+    "creator": 2,
+    "creation_date": "2024-01-28",
+    "start_date": "2024-01-28",
+    "end_date": "2024-07-20",
+    "status": "STATUS_IN_PROGRESS",
+    "executor": 4,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 2,
+  "fields": {
+    "title": "Повышение уровня квалификации до Middle Designer",
+    "description": "Немаловажной частью проектирования ресурса в последнее время стало приведение ресурса в соответствие стандартам W3C, что обеспечивает доступность содержания для инвалидов и пользователей портативных устройств (смотри юзабилити — «удобство использования»), а также кроссплатформенность (в данном случае — так называемая кросс-браузерность) вёрстки ресурса. Также непосредственно с дизайном сайтов смежны маркетинг в Интернете (интернет-маркетинг).",
+    "creator": 8,
+    "creation_date": "2024-01-29",
+    "start_date": "2024-02-01",
+    "end_date": "2024-10-31",
+    "status": "STATUS_IN_PROGRESS",
+    "executor": 9,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 3,
+  "fields": {
+    "title": "Повышение навыков моделирования",
+    "description": "Моделирование — исследование объектов познания на их моделях; построение и изучение моделей реально существующих объектов, процессов или явлений с целью получения объяснений этих явлений, а также для предсказания явлений, интересующих исследователей.",
+    "creator": 5,
+    "creation_date": "2024-01-29",
+    "start_date": "2024-01-08",
+    "end_date": "2024-01-28",
+    "status": "STATUS_DELAYED",
+    "executor": 6,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 4,
+  "fields": {
+    "title": "Системный аналитик уровень Middle",
+    "description": "Системный анализ — прикладное направление теории систем, применяемое при решении сложных слабоформализуемых проблем.",
+    "creator": 5,
+    "creation_date": "2024-01-29",
+    "start_date": "2024-01-01",
+    "end_date": "2024-12-31",
+    "status": "STATUS_IN_PROGRESS",
+    "executor": 7,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 5,
+  "fields": {
+    "title": "Системный аналитик уровень Junior +",
+    "description": "Краткосрочный план развития системного аналитика.",
+    "creator": 5,
+    "creation_date": "2024-01-29",
+    "start_date": "2023-12-04",
+    "end_date": "2024-01-22",
+    "status": "STATUS_COMPLETED",
+    "executor": 7,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 6,
+  "fields": {
+    "title": "Переход в комманду Back-end на позицию Junior",
+    "description": "План перехода, на другую позицию в компании.",
+    "creator": 5,
+    "creation_date": "2024-01-29",
+    "start_date": "2023-11-06",
+    "end_date": "2023-11-15",
+    "status": "STATUS_CANCELLED",
+    "executor": 6,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+},
+{
+  "model": "ipr.ipr",
+  "pk": 7,
+  "fields": {
+    "title": "Повышение квалификации по направлению \"Распределённые системы\"",
+    "description": "Архитектурный паттерн в распределённых системах",
+    "creator": 5,
+    "creation_date": "2024-01-29",
+    "start_date": "2023-12-20",
+    "end_date": "2024-01-10",
+    "status": "STATUS_NOT_COMPLETED",
+    "executor": 6,
+    "usability": 0,
+    "ease_of_creation": 0
+  }
+}
+]
