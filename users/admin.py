@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 from rest_framework.authtoken.models import TokenProxy
@@ -30,16 +31,60 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     """Пользователи."""
 
-    exclude = (
-        "last_login",
-        "date_joined",
-        "groups",
-        "user_permissions",
-        "is_staff",
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        (
+            "Личная информация",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "patronymic",
+                    "username",
+                    "position",
+                    "team",
+                    "userpic",
+                    "image_preview",
+                )
+            },
+        ),
+        (
+            "Привилегии",
+            {
+                "fields": (
+                    "is_active",
+                    "is_superuser",
+                )
+            },
+        ),
     )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+        (
+            "Личная информация",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "patronymic",
+                    "username",
+                    "userpic",
+                    "position",
+                    "team",
+                )
+            },
+        ),
+    )
+
     list_display = (
         "name",
         "position",
@@ -52,10 +97,12 @@ class UserAdmin(admin.ModelAdmin):
         "last_name",
         "first_name",
         "patronymic",
+        "position",
     )
     date_hierarchy = "date_joined"
     ordering = ("-date_joined",)
     readonly_fields = ("image_preview",)
+    autocomplete_fields = ("position", "team")
 
     @admin.display(description="ФИО")
     def name(self, obj: User) -> str:
@@ -86,3 +133,4 @@ class PositionAdmin(admin.ModelAdmin):
     """Должности сотрудников."""
 
     list_display = ("name",)
+    search_fields = ("name",)
