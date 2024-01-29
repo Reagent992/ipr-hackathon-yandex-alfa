@@ -147,8 +147,6 @@ REST_FRAMEWORK = {
     ],
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -171,7 +169,7 @@ DJOSER = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "IPR API",
     "DESCRIPTION": (
-        "API-Документация для SPA-приложения ИПР.<br>"
+        "API-Документация для SPA ИПР.<br>"
         "Хакатон Яндекс-Практикум/Альфа-Банк 2024. Команда № 8."
     ),
     "VERSION": "0.1.0",

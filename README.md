@@ -11,7 +11,7 @@ TO-DO: Описание проекта.
 
 ## [Репозиторий Frontend](https://github.com/NataliyaNikulshina/ipr-hackathon-yandex-alfa)
 
-## Документация
+## Документация API
 
 Пример адреса на запущенном сервере:
 
@@ -35,7 +35,7 @@ TO-DO: Описание проекта.
 | [django-cors-headers](https://pypi.org/project/django-cors-headers/) | Что-то делает с headers |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте. |
 
-## Code-Style
+## Code-Style при разработке
 
 ### Локальный запуск pre-commit
 
@@ -46,6 +46,11 @@ TO-DO: Описание проекта.
 
 ### 1. Требуется заполнить `.env` файл, пример заполнения находится в `.envexample`
 
+### 2. [Загрузка фикстур в БД](docs/authorization.md) - _Опционально_
+
 ## Авторы
 
-TO-DO
+- [Miron Sadykov](https://github.com/Reagent992)
+- [Mikhail Volkov](https://github.com/greenpandorik)
+- [Артур Галиаскаров](https://github.com/Arti1946)
+- [Ilya Kotenko](https://github.com/IlyaKotenko)

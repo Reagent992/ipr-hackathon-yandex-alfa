@@ -26,3 +26,17 @@ class NotificationSerializer(serializers.ModelSerializer):
             "recipient_id",
             "actor_id",
         )
+
+
+class UnseenSerializer(serializers.Serializer):
+    """Сериализатор количества непрочитанных уведомлений."""
+
+    unseen = serializers.IntegerField()
+
+
+class MarkAllAsReadSerializer(serializers.Serializer):
+    """Сериализатор отметки всех уведомлений пользователя как прочтенных."""
+
+    message = serializers.CharField(
+        default="Уведомления отмечены как прочтенные."
+    )
