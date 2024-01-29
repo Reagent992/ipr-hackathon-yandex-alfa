@@ -4,9 +4,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api.v1.serializers.api.notifications_serializer import (
+    MarkAllAsReadSerializer,
     NotificationSerializer,
+    UnseenSerializer,
 )
-from api.v1.serializers.internal.dummy_serializer import DummySerializer
 
 
 @extend_schema(tags=["Уведомления"])
@@ -29,9 +30,10 @@ from api.v1.serializers.internal.dummy_serializer import DummySerializer
         ),
     ),
     mark_all_as_read=extend_schema(
-        methods=["get"],
         summary="Отметить все уведомления пользователя как прочтенные",
-        responses={status.HTTP_200_OK: DummySerializer},
+    ),
+    unseen=extend_schema(
+        summary="Количество непрочитанных уведомлений",
     ),
 )
 class NotificationViewSet(viewsets.ModelViewSet):
@@ -54,11 +56,18 @@ class NotificationViewSet(viewsets.ModelViewSet):
         """Персонализированная выдача списка уведомлений."""
         return self.request.user.notifications.unread()
 
-    @action(methods=["get"], detail=False)
+    @action(
+        methods=["get"], detail=False, serializer_class=MarkAllAsReadSerializer
+    )
     def mark_all_as_read(self, request):
         """Отметить все уведомления пользователя как прочтенные."""
         request.user.notifications.mark_all_as_read()
-        return Response(
-            {"message": "Уведомления отмечены как прочтенные."},
-            status=status.HTTP_200_OK,
-        )
+        serializer = self.get_serializer({})
+        return Response(serializer.data)
+
+    @action(methods=["get"], detail=False, serializer_class=UnseenSerializer)
+    def unseen(self, request):
+        """Количество непрочитанных уведомлений."""
+        unread_count = self.request.user.notifications.unread().count()
+        serializer = self.get_serializer({"unseen": unread_count})
+        return Response(serializer.data)

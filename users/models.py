@@ -54,6 +54,7 @@ class User(AbstractUser):
         "Team",
         on_delete=models.SET_NULL,
         verbose_name="Команда",
+        help_text="Руководитель не является участником своей команды.",
         related_name="participants",
         null=True,
         blank=True,
