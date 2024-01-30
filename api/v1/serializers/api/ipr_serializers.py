@@ -9,7 +9,7 @@ from ipr.models import IPR
 User = get_user_model()
 
 
-class ExecutorSerializer(CustomUserSerializer):
+class UserSerializer(CustomUserSerializer):
     class Meta:
         fields = (
             "id",
@@ -24,8 +24,8 @@ class ExecutorSerializer(CustomUserSerializer):
 
 class IPRSerializer(serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True)
-    creator = serializers.PrimaryKeyRelatedField(read_only=True)
-    executor = ExecutorSerializer(read_only=True)
+    creator = UserSerializer(read_only=True)
+    executor = UserSerializer(read_only=True)
     status = serializers.SerializerMethodField()
 
     class Meta:
