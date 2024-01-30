@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from api.v1.filters import IPRFilter
 
 # from api.v1.permissions import TeamBossPermission
-from api.v1.serializers.ipr_serializers import IPRSerializer
+from api.v1.serializers.api.ipr_serializers import IPRSerializer
 from ipr.models import IPR
 from users.models import User
 

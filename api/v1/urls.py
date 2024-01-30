@@ -6,7 +6,7 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
-from api.v1.views.ipr import IPRViewSet
+from api.v1.views.ipr_views import IPRViewSet
 from api.v1.views.notifications_view import NotificationViewSet
 from api.v1.views.ratings_view import IPRRatingCreateView, TaskRatingCreateView
 from api.v1.views.task import TaskViewSet
@@ -18,7 +18,7 @@ v1_router.register("tasks", TaskViewSet, basename="tasks")
 v1_router.register(
     "notifications", NotificationViewSet, basename="notifications"
 )
-v1_router.register("ipr", IPRViewSet, basename="ipr")
+v1_router.register("iprs", IPRViewSet, basename="ipr")
 
 urlpatterns = [
     path("", include(v1_router.urls)),
