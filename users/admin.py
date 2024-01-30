@@ -1,20 +1,13 @@
-from typing import Optional
-
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
+from rest_framework.authtoken.models import TokenProxy
 
-from users.models import MiddleUsersTeams, Team, User
+from users.models import Position, Team, User
 
+admin.site.unregister(TokenProxy)
 admin.site.unregister(Group)
-
-
-class MiddleUsersTeamsInline(admin.TabularInline):
-    """Дополнительное поле для добавления участников в команду."""
-
-    model = MiddleUsersTeams
-    extra = 1
-    autocomplete_fields = ("user",)
 
 
 @admin.register(Team)
@@ -32,27 +25,70 @@ class TeamAdmin(admin.ModelAdmin):
         "boss__first_name",
         "boss__patronymic",
     )
-    inlines = [MiddleUsersTeamsInline]
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     autocomplete_fields = ("boss",)
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     """Пользователи."""
 
-    exclude = (
-        "last_login",
-        "date_joined",
-        "groups",
-        "user_permissions",
-        "is_staff",
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        (
+            "Личная информация",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "patronymic",
+                    "username",
+                    "position",
+                    "team",
+                    "userpic",
+                    "image_preview",
+                )
+            },
+        ),
+        (
+            "Привилегии",
+            {
+                "fields": (
+                    "is_active",
+                    "is_superuser",
+                )
+            },
+        ),
     )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+        (
+            "Личная информация",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "patronymic",
+                    "username",
+                    "userpic",
+                    "position",
+                    "team",
+                )
+            },
+        ),
+    )
+
     list_display = (
         "name",
         "position",
-        "team_name",
+        "team",
         "email",
         "userpic_thumbnail",
     )
@@ -61,10 +97,12 @@ class UserAdmin(admin.ModelAdmin):
         "last_name",
         "first_name",
         "patronymic",
+        "position",
     )
     date_hierarchy = "date_joined"
     ordering = ("-date_joined",)
     readonly_fields = ("image_preview",)
+    autocomplete_fields = ("position", "team")
 
     @admin.display(description="ФИО")
     def name(self, obj: User) -> str:
@@ -89,6 +127,10 @@ class UserAdmin(admin.ModelAdmin):
             else "Аватар не загружен."
         )
 
-    @admin.display(description="Команда")
-    def team_name(self, user: User) -> Optional[str]:
-        return user.get_team().name if user.get_team() else None
+
+@admin.register(Position)
+class PositionAdmin(admin.ModelAdmin):
+    """Должности сотрудников."""
+
+    list_display = ("name",)
+    search_fields = ("name",)

@@ -152,6 +152,5 @@ Thumbs.db
 /media/
 /collected_static/
 .vscode
-*/migrations/*
 /static/
 # Миграции убраны из git. Т.к. до существования БД проще без них.

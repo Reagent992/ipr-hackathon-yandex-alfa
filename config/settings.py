@@ -8,13 +8,25 @@ env = Env()
 env.read_env()
 
 # ---------------------------------------------------------LOAD ENVIRONMENT VAR
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = env.str(
+    "SECRET_KEY",
+    default="django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=$satw167",
+)
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+DB_NAME = env.str("DB_NAME", default="IPR")
+DB_USER = env.str("POSTGRES_USER", default="username")
+DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
+DB_HOST = env.str("DB_HOST", default="db")
+DB_PORT = env.int("DB_PORT", default=5432)
+CORS_ALLOWED_ORIGINS = env.list(
+    "CORS_ALLOWED_ORIGINS", default=["localhost:80", "127.0.0.1:80"]
+)
+CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
 # -----------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -30,6 +42,8 @@ THIRD_PARTY_APPS = [
     "djoser",
     "django_filters",
     "drf_spectacular",
+    "notifications",
+    "corsheaders",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
@@ -37,12 +51,15 @@ LOCAL_APPS = [
     "ipr.apps.IprConfig",
     "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
+    "ratings.apps.RatingsConfig",
+    "core.apps.CoreConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -74,11 +91,11 @@ if USE_POSTGRESQL:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME"),
-            "USER": os.getenv("POSTGRES_USER"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-            "HOST": os.getenv("DB_HOST"),
-            "PORT": os.getenv("DB_PORT"),
+            "NAME": DB_NAME,
+            "USER": DB_USER,
+            "PASSWORD": DB_PASSWORD,
+            "HOST": DB_HOST,
+            "PORT": DB_PORT,
         }
     }
 else:
@@ -88,6 +105,7 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -118,57 +136,62 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #  -------------------------------------------------------------CUSTOM SETTINGS
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.User"
 # -----------------------------------------------------------------DRF SETTINGS
-
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "PAGE_SIZE": 6,
+    "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-
+# Выключено предупреждение об отсутствие DEFAULT_PAGINATION_CLASS
+SILENCED_SYSTEM_CHECKS = ["rest_framework.W001"]
+# Время жизни токена увеличено, для упрощения тестирования.
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("Bearer",),
 }
-
 # --------------------------------------------------------------DJOSER SETTINGS
-
 DJOSER = {
     "LOGIN_FIELD": "email",
-    # TODO: "PERMISSIONS": {},
     "SERIALIZERS": {
         "current_user": "api.v1.serializers.api.users_serializer.CustomUserSerializer",
     },
     "HIDE_USERS": False,
 }
-
 # -------------------------------------------------------------ALTER USER MODEL
 SPECTACULAR_SETTINGS = {
     "TITLE": "IPR API",
     "DESCRIPTION": (
-        "API-Документация для SPA-приложения ИПР.<br>"
+        "API-Документация для SPA ИПР.<br>"
         "Хакатон Яндекс-Практикум/Альфа-Банк 2024. Команда № 8."
     ),
     "VERSION": "0.1.0",
     "SCHEMA_PATH_PREFIX": "/api/v1/",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 # --------------------------------------------------------------------CONSTANTS
 EMAIL_LENGTH = 254
 NAME_LENGTH = 150
 MAX_LEN_COMMENT_TEXT = 200
+DESCRIPTION_LEN = 500
+SKILL_LEN = 255
 RESTRICTED_USERNAMES = (
     "me",
     "admin",
     "administrator",
     "root",
+)
+RATING_CHOICES = (
+    (1, "1 звезда"),
+    (2, "2 звезды"),
+    (3, "3 звезды"),
+    (4, "4 звезды"),
+    (5, "5 звезд"),
 )

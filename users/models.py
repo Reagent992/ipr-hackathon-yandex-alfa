@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -41,17 +39,27 @@ class User(AbstractUser):
     userpic = models.ImageField(
         "Аватар пользователя",
         upload_to="userpic/",
-        help_text="Загрузка аватара пользователя",
         blank=True,
         null=True,
     )
-    position = models.CharField(
-        "Должность",
-        max_length=settings.NAME_LENGTH,
+    position = models.ForeignKey(
+        "Position",
+        on_delete=models.SET_NULL,
+        verbose_name="Должность",
+        related_name="employees",
+        null=True,
+        blank=True,
+    )
+    team = models.ForeignKey(
+        "Team",
+        on_delete=models.SET_NULL,
+        verbose_name="Команда",
+        help_text="Руководитель не является участником своей команды.",
+        related_name="participants",
+        null=True,
         blank=True,
     )
     USERNAME_FIELD = "email"
-    EMAIL_FIELD = "email"
     REQUIRED_FIELDS = (
         "username",
         "first_name",
@@ -71,10 +79,6 @@ class User(AbstractUser):
         names = (self.last_name, self.first_name, self.patronymic)
         return " ".join(names) if any(names) else self.username or self.email
 
-    def get_team(self) -> Optional["Team"]:
-        """Возвращает команду пользователя, если она существует."""
-        return self.team.first() if self.team.exists() else None
-
     def is_boss(self) -> bool:
         """Является ли пользователь руководителем команды."""
         return hasattr(self, "managed_team") and self.managed_team is not None
@@ -92,12 +96,6 @@ class Team(models.Model):
         related_name="managed_team",
         verbose_name="Руководитель",
     )
-    users = models.ManyToManyField(
-        User,
-        through="MiddleUsersTeams",
-        related_name="team",
-        verbose_name="Участники команды",
-    )
     created_at = models.DateTimeField(
         "Дата создания",
         auto_now_add=True,
@@ -112,29 +110,16 @@ class Team(models.Model):
         return self.name
 
 
-class MiddleUsersTeams(models.Model):
-    team = models.ForeignKey(
-        Team,
-        on_delete=models.CASCADE,
-        verbose_name="Команда",
-        related_name="participants",
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Сотрудник",
-        related_name="participates",
-    )
-    joined_at = models.DateTimeField(
-        "Дата вступления",
-        auto_now_add=True,
+class Position(models.Model):
+    """Должность."""
+
+    name = models.CharField(
+        max_length=settings.NAME_LENGTH, verbose_name="Название должности"
     )
 
     class Meta:
-        ordering = ("-joined_at",)
-        verbose_name = "Участник команды"
-        verbose_name_plural = "Участники команды"
-        unique_together = ("user",)
+        verbose_name = "Должность"
+        verbose_name_plural = "Должности"
 
     def __str__(self) -> str:
-        return f"{self.user.get_full_name()} ({self.team.name})"
+        return self.name

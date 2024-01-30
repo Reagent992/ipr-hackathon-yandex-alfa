@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import IPRFilter
-from api.v1.permissions import TeamBossPermission
+
+# from api.v1.permissions import TeamBossPermission
 from api.v1.serializers.ipr_serializers import IPRSerializer
 from ipr.models import IPR
 from users.models import User
@@ -28,14 +29,14 @@ class IPRViewSet(ModelViewSet):
         executor = get_object_or_404(User, id=executor_id)
         serializer.save(creator=self.request.user, executor=executor)
 
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            self.permission_classes = [permissions.IsAuthenticated]
-        else:
-            self.permission_classes = [
-                TeamBossPermission,
-            ]
-        return super(IPRViewSet, self).get_permissions()
+    # def get_permissions(self):
+    #     if self.request.method in permissions.SAFE_METHODS:
+    #         self.permission_classes = [permissions.IsAuthenticated]
+    #     else:
+    #         self.permission_classes = [
+    #             TeamBossPermission,
+    #         ]
+    #     return super(IPRViewSet, self).get_permissions()
 
     @action(
         detail=True,
