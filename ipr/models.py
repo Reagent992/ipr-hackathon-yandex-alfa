@@ -1,15 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.statuses_for_ipr_tests import Status
+
 User = get_user_model()
-
-
-STATUSES = [
-    ("complete", "Выполнен"),
-    ("in_progress", "В работе"),
-    ("canceled", "Отменен"),
-    ("trail", "Отстает"),
-]
 
 
 class IPR(models.Model):
@@ -20,13 +14,10 @@ class IPR(models.Model):
         verbose_name="Создатель ИПР",
         related_name="created_ipr",
     )
-    creation_date = models.DateField("Дата создания ИПР", auto_now_add=True)
-    start_date = models.DateField(
-        "Дата начала работ по ИПР", blank=True, null=True
-    )
+    start_date = models.DateField("Дата начала работ по ИПР")
     end_date = models.DateField("Дедлайн ИПР")
     status = models.CharField(
-        "Статус ИПР", max_length=20, choices=STATUSES, default=STATUSES[0]
+        "Статус ИПР", max_length=20, choices=Status, default=Status.IN_PROGRESS
     )
     executor = models.ForeignKey(
         User,

@@ -8,7 +8,6 @@ class IPRAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "creator",
-        "creation_date",
         "start_date",
         "end_date",
         "status",
@@ -16,14 +15,14 @@ class IPRAdmin(admin.ModelAdmin):
     )
     search_fields = ("title", "executor", "author")
     list_filter = (
-        "creation_date",
         "start_date",
         "status",
         "creator",
         "executor",
         "title",
+        "end_date",
     )
-    ordering = ("-creation_date",)
+    ordering = ("-id",)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
