@@ -14,6 +14,7 @@ class IPR(models.Model):
         verbose_name="Создатель ИПР",
         related_name="created_ipr",
     )
+    creation_date = models.DateField("Дата создания ИПР", auto_now_add=True)
     start_date = models.DateField("Дата начала работ по ИПР")
     end_date = models.DateField("Дедлайн ИПР")
     status = models.CharField(

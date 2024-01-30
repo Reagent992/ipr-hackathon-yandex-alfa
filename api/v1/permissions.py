@@ -7,13 +7,13 @@ User = get_user_model()
 
 class TeamBossPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        user = request.user
-        executor_id = view.kwargs.get("user_id")
+        executor_id = request.query_params.get("user_id")
         executor = get_object_or_404(User, id=executor_id)
+        user = request.user
         if (
             user.is_authenticated
-            and user.team == executor.team
             and user.is_boss()
+            and user.managed_team == executor.team
         ):
             return True
         return False

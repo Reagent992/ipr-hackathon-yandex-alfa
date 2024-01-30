@@ -20,12 +20,14 @@ class IPRViewSet(ModelViewSet):
     serializer_class = IPRSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = IPRFilter
-
-    class Meta:
-        ordering = ["-creation_date"]
+    http_method_names = ["get", "post", "patch", "head", "options"]
 
     def get_queryset(self):
-        return IPR.objects.select_related("executor", "creator")
+        if self.request.query_params:
+            return IPR.objects.filter(
+                executor=self.request.query_params.get("user_id")
+            )
+        return IPR.objects.filter(executor=self.request.user)
 
     def get_serializer_class(self):
         if self.request.method == "POST" or self.request.method == "PATCH":
@@ -33,7 +35,7 @@ class IPRViewSet(ModelViewSet):
         return IPRSerializer
 
     def perform_create(self, serializer):
-        executor_id = self.kwargs.get("user_id")
+        executor_id = self.request.query_params.get("user_id")
         executor = get_object_or_404(User, id=executor_id)
         serializer.save(creator=self.request.user, executor=executor)
 
@@ -49,10 +51,10 @@ class IPRViewSet(ModelViewSet):
         methods=["get"],
         permission_classes=[permissions.IsAuthenticated],
     )
-    def status(self, request, ipr_id):
+    def status(self, request, pk):
         """Дополнительный эндпоинт и View-функция
         для отображения прогресса выполнения ИПР"""
-        ipr = get_object_or_404(IPR, id=ipr_id)
+        ipr = get_object_or_404(IPR, id=pk)
         tasks_without_trail = ipr.tasks.exclude(status=Status.TRAIL).count()
         tasks_is_complete = ipr.tasks.filter(status=Status.COMPLETE).count()
         progress = tasks_without_trail / 100 * tasks_is_complete

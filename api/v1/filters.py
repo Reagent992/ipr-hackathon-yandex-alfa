@@ -1,5 +1,9 @@
 from django.contrib.auth import get_user_model
-from django_filters.rest_framework import BooleanFilter, CharFilter, FilterSet
+from django_filters.rest_framework import (
+    BooleanFilter,
+    FilterSet,
+    NumberFilter,
+)
 
 from ipr.models import IPR
 
@@ -20,7 +24,7 @@ class CustomFilter(FilterSet):
 
 
 class IPRFilter(FilterSet):
-    executor = CharFilter()
+    user_id = NumberFilter(field_name="executor")
 
     class Meta:
         model = IPR

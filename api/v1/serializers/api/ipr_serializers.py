@@ -12,6 +12,7 @@ User = get_user_model()
 class ExecutorSerializer(CustomUserSerializer):
     class Meta:
         fields = (
+            "id",
             "first_name",
             "last_name",
             "patronymic",
@@ -44,6 +45,7 @@ class IPRSerializer(serializers.ModelSerializer):
     def get_status(self, obj):
         if obj.status == Status.IN_PROGRESS and obj.start_date > obj.end_date:
             obj.status = Status.TRAIL
+            obj.save()
         return obj.status
 
 
