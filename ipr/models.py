@@ -1,3 +1,4 @@
+from dirtyfields import DirtyFieldsMixin
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -13,7 +14,7 @@ STATUSES = [
 ]
 
 
-class IPR(models.Model):
+class IPR(DirtyFieldsMixin, models.Model):
     title = models.CharField("Название ИПР", max_length=100)
     description = models.CharField("Описание ИПР", max_length=500)
     creator = models.ForeignKey(

@@ -6,8 +6,8 @@
 
 ```bash
 cd docs              # Переход в папку docs
-load_fixtures.bat    # Для загрузки фикстур в бд на Windows
-make Makefile        # Для загрузки фикстур в бд на Linux
+load_fixtures.sh     # Для загрузки фикстур в бд через bash-терминал
+load_fixtures.bat    # Для загрузки фикстур в бд через Windows-терминал
 ```
 
 ### Superadmin

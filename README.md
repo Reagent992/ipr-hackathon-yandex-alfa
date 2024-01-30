@@ -33,6 +33,7 @@ TO-DO: Описание проекта.
 | [Django filter](https://pypi.org/project/django-filter/) | Библиотека для фильтрации данных в приложениях Django. |
 | [Django Notifications](https://github.com/django-notifications/django-notifications) | Уведомления. |
 | [django-cors-headers](https://pypi.org/project/django-cors-headers/) | Что-то делает с headers |
+| [django-dirtyfields](https://django-dirtyfields.readthedocs.io/en/stable/quickstart.html) | Для доступа к измененной информации в джанго сигнале `post_save` |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте. |
 
 ## Code-Style при разработке
