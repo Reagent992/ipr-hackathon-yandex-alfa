@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from api.v1.serializers.api.users_serializer import CustomUserSerializer
 from api.v1.serializers.task import TaskSerializer
-from core.statuses_for_ipr_tests import Status
+from core.statuses import Status
 from ipr.models import IPR
 
 User = get_user_model()

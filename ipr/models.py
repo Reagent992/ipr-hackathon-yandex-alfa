@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.statuses_for_ipr_tests import Status
+from core.statuses import Status
 
 User = get_user_model()
 
