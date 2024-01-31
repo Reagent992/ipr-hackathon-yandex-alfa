@@ -2,8 +2,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from notifications.signals import notify
 
+from core.statuses import Status
 from ipr.models import IPR
-from tasks.models import Task, TaskStatus
+from tasks.models import Task
 
 
 @receiver(post_save, sender=IPR)
@@ -44,7 +45,7 @@ def created_ipr_notification(sender, instance: IPR, created, **kwargs):
                 target=instance,
             )
         #  ----------------------------------------Уведомления для руководителя
-        elif instance.status is TaskStatus.COMPLETE:
+        elif instance.status is Status.COMPLETE:
             msg = (
                 f"{instance.executor.get_full_name()}"
                 f" закрыл ИПР: {instance.title}"

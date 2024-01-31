@@ -4,8 +4,9 @@ from django.test import TestCase
 from django.utils import timezone
 from notifications.models import Notification
 
+from core.statuses import Status
 from ipr.models import IPR
-from tasks.models import Task, TaskStatus
+from tasks.models import Task
 
 User = get_user_model()
 
@@ -27,12 +28,11 @@ class NotificationsTest(TestCase):
         # ------------------------------------------------------------------ИПР
         self.ipr = IPR.objects.create(
             title="Test IPR",
-            description="Test IPR Description",
             creator=self.creator,
             creation_date=timezone.now(),
             start_date=timezone.now() + timezone.timedelta(days=1),
             end_date=timezone.now() + timezone.timedelta(days=2),
-            status=TaskStatus.IN_PROGRESS,
+            status=Status.IN_PROGRESS,
             executor=self.executor,
         )
         self.ipr_content_type_id = ContentType.objects.get_for_model(
@@ -137,7 +137,7 @@ class NotificationsTest(TestCase):
     def test_notification_created_after_ipr_complete(self):
         """Тест создания уведомления о завершении ИПР."""
 
-        self.ipr.status = TaskStatus.COMPLETE
+        self.ipr.status = Status.COMPLETE
         self.ipr.save()
         self.ipr.refresh_from_db()
         expected_msg = (
