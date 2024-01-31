@@ -1,3 +1,4 @@
+from dirtyfields import DirtyFieldsMixin
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -29,7 +30,7 @@ class Skill(models.Model):
         return self.skill_name
 
 
-class Task(models.Model):
+class Task(DirtyFieldsMixin, models.Model):
     """Модель задачи."""
 
     name = models.CharField(

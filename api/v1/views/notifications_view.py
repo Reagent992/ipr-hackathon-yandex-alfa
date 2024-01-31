@@ -38,7 +38,7 @@ from api.v1.serializers.api.notifications_serializer import (
 )
 class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
-    http_method_names = ["get", "patch", "head", "options"]
+    http_method_names = ("get", "patch", "head", "options")
 
     def partial_update(self, request, pk):
         """Отметить уведомление как прочитанное."""
