@@ -1,4 +1,4 @@
-name: ipr deploy
+name: deploy
 
 on:
   push:
