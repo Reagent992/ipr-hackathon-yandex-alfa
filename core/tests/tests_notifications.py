@@ -58,7 +58,7 @@ class NotificationsTest(TestCase):
             target_object_id=self.task.id,
             target_content_type_id=self.task_content_type_id,
         ).first()
-        # ---------------------------------------------------------------------
+        # ------------------------------------------------------------Константы
         self.AMOUNT_OF_NOTIFICATIONS = 2
 
     def test_notifications_created(self):
@@ -103,13 +103,13 @@ class NotificationsTest(TestCase):
         new_start_date = timezone.now() + timezone.timedelta(days=5)
         self.ipr.start_date = new_start_date
         self.ipr.save()
-        updated_ipr_notification = Notification.objects.first()
+        self.ipr.refresh_from_db()
         expected_msg = (
             f'Дата начала работы по ИПР "{self.ipr.title}"'
             f" изменена на {self.ipr.start_date}"
         )
         self.assertEqual(
-            updated_ipr_notification.verb,
+            self.ipr.verb,
             expected_msg,
             (
                 "Не правильное содержание уведомления"
@@ -123,13 +123,13 @@ class NotificationsTest(TestCase):
         new_end_date = timezone.now() + timezone.timedelta(days=10)
         self.ipr.end_date = new_end_date
         self.ipr.save()
-        updated_ipr_notification = Notification.objects.first()
+        self.ipr.refresh_from_db()
         expected_msg = (
             f'Дата окончания работы по ИПР "{self.ipr.title}"'
             f" изменена на {self.ipr.end_date}"
         )
         self.assertEqual(
-            updated_ipr_notification.verb,
+            self.ipr.verb,
             expected_msg,
             "Не правильное содержание уведомления об изменении end_date в ИПР",
         )
@@ -139,13 +139,13 @@ class NotificationsTest(TestCase):
 
         self.ipr.status = TaskStatus.COMPLETE
         self.ipr.save()
-        updated_ipr_notification = Notification.objects.first()
+        self.ipr.refresh_from_db()
         expected_msg = (
             f"{self.ipr.executor.get_full_name()}"
             f" закрыл ИПР: {self.ipr.title}"
         )
         self.assertEqual(
-            updated_ipr_notification.verb,
+            self.ipr.verb,
             expected_msg,
             "Не правильное содержание уведомления о завершении ИПР",
         )

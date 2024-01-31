@@ -14,7 +14,15 @@ SECRET_KEY = env.str(
 )
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
 DEBUG = env.bool("DEBUG", default=False)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = env.list(
+    "ALLOWED_HOSTS",
+    default=[
+        "localhost",
+        "127.0.0.1",
+        "[::1]",
+        "testserver",
+    ],
+)
 DB_NAME = env.str("DB_NAME", default="IPR")
 DB_USER = env.str("POSTGRES_USER", default="username")
 DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
