@@ -1,4 +1,4 @@
-name: Code-style workflow
+name: Code-style/tests
 
 on: [push]
 
@@ -31,3 +31,7 @@ jobs:
 
     - name: Run flake8
       run: flake8 --verbose --config ./setup.cfg .
+
+    - name: Run Django tests
+      run: |
+        python manage.py test -v 2 --noinput
