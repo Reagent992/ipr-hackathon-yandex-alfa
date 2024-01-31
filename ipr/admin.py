@@ -7,22 +7,21 @@ from .models import IPR
 class IPRAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "description",
         "creator",
-        "creation_date",
         "start_date",
         "end_date",
         "status",
         "executor",
+        "creation_date",
     )
     search_fields = ("title", "executor", "author")
     list_filter = (
-        "creation_date",
         "start_date",
         "status",
         "creator",
         "executor",
         "title",
+        "end_date",
     )
     ordering = ("-creation_date",)
 

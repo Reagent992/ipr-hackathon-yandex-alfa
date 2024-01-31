@@ -29,7 +29,8 @@ DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
 DB_HOST = env.str("DB_HOST", default="db")
 DB_PORT = env.int("DB_PORT", default=5432)
 CORS_ALLOWED_ORIGINS = env.list(
-    "CORS_ALLOWED_ORIGINS", default=["localhost:80", "127.0.0.1:80"]
+    "CORS_ALLOWED_ORIGINS",
+    default=["http://localhost:80", "http://127.0.0.1:80"],
 )
 CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
 # -----------------------------------------------------------------------------
