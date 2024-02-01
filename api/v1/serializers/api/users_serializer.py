@@ -20,6 +20,9 @@ class CustomUserSerializer(UserSerializer):
     """Сериализатор пользователей."""
 
     position = serializers.CharField(source="position.name", read_only=True)
+    ruled_team = serializers.IntegerField(
+        source="managed_team.id", read_only=True
+    )
 
     class Meta:
         model = User
@@ -35,5 +38,6 @@ class CustomUserSerializer(UserSerializer):
             "date_joined",
             "last_login",
             "userpic",
+            "ruled_team",
             "team",
         )
