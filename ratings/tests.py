@@ -22,7 +22,6 @@ class RatingModelTest(TestCase):
         )
         cls.ipr = IPR.objects.create(
             title="Test IPR",
-            description="Test IPR description",
             start_date=date(2024, 1, 1),
             end_date=date(2024, 1, 10),
             creator=cls.user1,

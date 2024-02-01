@@ -1,7 +1,7 @@
 # Backend Проекта "ИПР". Хакатон Яндекс-Альфа-Банк. Команда №8
 
-![Code-Style](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/code-style.yml/badge.svg)
-[![ipr deploy](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/deploy.yml)\
+[![Code-style/tests](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/code-style_and_tests.yml/badge.svg)](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/code-style_and_tests.yml)
+[![deploy](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/deploy.yml/badge.svg)](https://github.com/Reagent992/ipr-hackathon-yandex-alfa/actions/workflows/deploy.yml)\
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -33,6 +33,7 @@ TO-DO: Описание проекта.
 | [Django filter](https://pypi.org/project/django-filter/) | Библиотека для фильтрации данных в приложениях Django. |
 | [Django Notifications](https://github.com/django-notifications/django-notifications) | Уведомления. |
 | [django-cors-headers](https://pypi.org/project/django-cors-headers/) | Что-то делает с headers |
+| [django-dirtyfields](https://django-dirtyfields.readthedocs.io/en/stable/quickstart.html) | Для доступа к измененной информации в джанго сигнале `post_save` |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте. |
 
 ## Code-Style при разработке

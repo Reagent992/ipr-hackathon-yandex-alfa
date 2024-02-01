@@ -25,7 +25,7 @@
   "model": "users.user",
   "pk": 2,
   "fields": {
-    "password": "uppbkdf2_sha256$720000$v0WwfyVPVxZWkubZ9Wv4pV$lqIeAcBPvbTKzdrgZTATXhuaCb+Rdbjn8gvzMQ0ymJw=ass",
+    "password": "pbkdf2_sha256$720000$v0WwfyVPVxZWkubZ9Wv4pV$lqIeAcBPvbTKzdrgZTATXhuaCb+Rdbjn8gvzMQ0ymJw=",
     "last_login": null,
     "is_superuser": false,
     "is_staff": false,
