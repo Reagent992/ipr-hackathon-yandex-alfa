@@ -13,7 +13,6 @@ from api.v1.serializers.api.ipr_serializers import (
 )
 from core.statuses import Status
 from ipr.models import IPR
-from users.models import User
 
 
 class IPRViewSet(ModelViewSet):
@@ -23,11 +22,9 @@ class IPRViewSet(ModelViewSet):
     http_method_names = ["get", "post", "patch", "head", "options"]
 
     def get_queryset(self):
-        if self.request.query_params:
-            return IPR.objects.filter(
-                executor=self.request.query_params.get("user_id")
-            )
-        return IPR.objects.filter(executor=self.request.user)
+        if not self.request.query_params and self.action == "list":
+            return IPR.objects.filter(executor=self.request.user)
+        return IPR.objects.select_related("executor", "creator")
 
     def get_serializer_class(self):
         if self.request.method in ("POST", "PATCH"):
@@ -35,9 +32,7 @@ class IPRViewSet(ModelViewSet):
         return IPRSerializer
 
     def perform_create(self, serializer):
-        executor_id = self.request.query_params.get("user_id")
-        executor = get_object_or_404(User, id=executor_id)
-        serializer.save(creator=self.request.user, executor=executor)
+        serializer.save(creator=self.request.user)
 
     def get_permissions(self):
         if self.request.method not in permissions.SAFE_METHODS:
