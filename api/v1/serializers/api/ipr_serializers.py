@@ -42,7 +42,7 @@ class IPRSerializer(serializers.ModelSerializer):
         )
         model = IPR
 
-    def get_status(self, obj):
+    def get_status(self, obj) -> str:
         if obj.status == Status.IN_PROGRESS and obj.start_date > obj.end_date:
             obj.status = Status.TRAIL
             obj.save()

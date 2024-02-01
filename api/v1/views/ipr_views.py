@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -15,6 +16,27 @@ from core.statuses import Status
 from ipr.models import IPR
 
 
+@extend_schema(tags=["ИПР"])
+@extend_schema_view(
+    list=extend_schema(
+        summary=("Список ИПР"),
+        description=(
+            "<ul><h3>Поумолчанию выдает список ИПР пользователя отправившего"
+            " запрос на данный эндпоинт</h3><li>"
+            "Руководителю команды доступна фильтрация по id исполнителя ИПР"
+            " <code>./?user_id=1</code></li>"
+        ),
+    ),
+    retrieve=extend_schema(summary="ИПР пользователя"),
+    create=extend_schema(
+        summary="Создание ИПР",
+        responses=IPRSerializer,
+    ),
+    partial_update=extend_schema(
+        summary="Частичное обновление ИПР",
+        responses=IPRSerializer,
+    ),
+)
 class IPRViewSet(ModelViewSet):
     serializer_class = IPRSerializer
     filter_backends = [DjangoFilterBackend]
@@ -39,6 +61,14 @@ class IPRViewSet(ModelViewSet):
             self.permission_classes = [TeamBossPermission]
         return super(IPRViewSet, self).get_permissions()
 
+    @extend_schema(
+        summary=("Подробный статус выполнения ИПР"),
+        description=(
+            "В параметре <i><b>context</b></i> лежит значение "
+            "<i><b>progress</b></i>, "
+            "которое отображает процентное содержание выполненных задач."
+        ),
+    )
     @action(
         detail=True,
         methods=["get"],
@@ -49,8 +79,7 @@ class IPRViewSet(ModelViewSet):
         ipr = get_object_or_404(IPR, id=pk)
         tasks_without_trail = ipr.tasks.exclude(status=Status.TRAIL).count()
         tasks_is_complete = ipr.tasks.filter(status=Status.COMPLETE).count()
-        progress = tasks_without_trail / 100 * tasks_is_complete
-
+        progress = (tasks_without_trail / 100) * tasks_is_complete
         context = {
             "request": request,
             "progress": progress,
