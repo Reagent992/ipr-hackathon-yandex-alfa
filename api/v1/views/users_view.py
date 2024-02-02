@@ -7,7 +7,6 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
-from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
 from api.v1.filters import CustomFilter
@@ -27,7 +26,6 @@ from users.models import Position
             "<code>./?ordering=full_name</code>  "
             "и должности <code>./?ordering=-position_name</code></li>"
             "<li>Поиск по ФИО и должности <code>./?search=Мирон</code></li>"
-            "<li>Ограничение pagination <code>./?limit=5</code>.</li>"
             "<li>Фильтр по id команды <code>./?team=1</code></li>"
             "<li>Фильтр по id команды и отсутствию ИПР "
             "<code>./?team=1&no_ipr=true</code></li></ul>"
@@ -60,7 +58,6 @@ class UserViewSet(UserViewSetFromDjoser):
             "position__name",
         )
     serializer_class = CustomUserSerializer
-    pagination_class = LimitOffsetPagination
     http_method_names = ["get", "head", "options"]
     ordering_fields = ("full_name", "position_name")
 

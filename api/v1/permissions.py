@@ -7,7 +7,7 @@ User = get_user_model()
 
 class TeamBossPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        executor_id = request.query_params.get("user_id")
+        executor_id = request.data.get("executor")
         executor = get_object_or_404(User, id=executor_id)
         user = request.user
         if (
