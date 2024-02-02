@@ -48,7 +48,7 @@ class Task(DirtyFieldsMixin, models.Model):
         max_length=20,
         choices=Skill,
         default=Skill.HARD,
-        verbose_name="Статус задачи",
+        verbose_name="Навык",
     )
     executor = models.ForeignKey(
         User,
