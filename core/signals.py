@@ -79,8 +79,8 @@ def created_task_notification(sender, instance: Task, created, **kwargs):
 def set_delayed_status(sender, instance, **kwargs):
     if (
         instance.end_date
-        and instance.end_date < timezone.now().date()
-        and instance.status != "trail"
+        and instance.end_date < timezone.localdate()
+        and instance.status != Status.TRAIL
     ):
-        instance.status = "trail"
+        instance.status = Status.TRAIL
         instance.save()
