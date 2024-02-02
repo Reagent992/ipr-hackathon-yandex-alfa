@@ -62,7 +62,6 @@ class Task(models.Model):
         Skill,
         max_length=settings.SKILL_LEN,
         verbose_name="Навык",
-        null=True,
         blank=True,
     )
     executor = models.ForeignKey(
