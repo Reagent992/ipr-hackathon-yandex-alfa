@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from api.v1.serializers.api.task_serializer import TaskSerializer
 from api.v1.serializers.api.users_serializer import CustomUserSerializer
-from api.v1.serializers.task import TaskSerializer
 from core.statuses import Status
 from ipr.models import IPR
 
