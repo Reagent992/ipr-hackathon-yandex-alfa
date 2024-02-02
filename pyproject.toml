@@ -47,4 +47,7 @@ skip_glob = [
     "env/",
     "static/*",
     "templates/*",
+    ".venv",
+    ".venv/",
+    ".venv/*",
 ]
