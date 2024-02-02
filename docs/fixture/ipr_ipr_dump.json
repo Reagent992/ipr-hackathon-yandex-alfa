@@ -1,93 +1,94 @@
 [
-{
-  "model": "ipr.ipr",
-  "pk": 1,
-  "fields": {
-    "title": "Senior Front-end разработчик",
-    "creator": 2,
-    "creation_date": "2024-01-20",
-    "start_date": "2024-01-28",
-    "end_date": "2024-07-20",
-    "status": "STATUS_IN_PROGRESS",
-    "executor": 4
+  {
+    "model": "ipr.ipr",
+    "pk": 1,
+    "fields": {
+      "title": "Senior Front-end разработчик",
+      "creator": 2,
+      "creation_date": "2024-01-20",
+      "start_date": "2024-01-28",
+      "end_date": "2024-07-20",
+      "status": "STATUS_IN_PROGRESS",
+      "executor": 4
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 2,
+    "fields": {
+      "title": "Повышение уровня квалификации до Middle Designer",
+      "creator": 8,
+      "creation_date": "2024-01-20",
+      "start_date": "2024-02-01",
+      "end_date": "2024-10-31",
+      "status": "STATUS_IN_PROGRESS",
+      "executor": 9
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 3,
+    "fields": {
+      "title": "Повышение навыков моделирования",
+      "creator": 5,
+      "creation_date": "2024-02-02",
+      "start_date": "2024-01-08",
+      "end_date": "2024-01-28",
+      "status": "trail",
+      "executor": 6
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 4,
+    "fields": {
+      "title": "Системный аналитик уровень Middle",
+      "creator": 5,
+      "creation_date": "2024-01-01",
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31",
+      "status": "STATUS_IN_PROGRESS",
+      "executor": 7
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 5,
+    "fields": {
+      "title": "Системный аналитик уровень Junior +",
+      "creator": 5,
+      "creation_date": "2024-02-02",
+      "start_date": "2023-12-04",
+      "end_date": "2024-01-22",
+      "status": "trail",
+      "executor": 7
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 6,
+    "fields": {
+      "title": "Переход в комманду Back-end на позицию Junior",
+      "creator": 5,
+      "creation_date": "2024-02-02",
+      "start_date": "2023-11-06",
+      "end_date": "2023-11-15",
+      "status": "trail",
+      "executor": 6
+    }
+  },
+  {
+    "model": "ipr.ipr",
+    "pk": 7,
+    "fields": {
+      "title": "Повышение квалификации по направлению \"Распределённые системы\"",
+      "creator": 5,
+      "creation_date": "2024-02-02",
+      "start_date": "2023-12-20",
+      "end_date": "2024-01-10",
+      "status": "trail",
+      "executor": 6
+    }
   }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 2,
-  "fields": {
-    "title": "Повышение уровня квалификации до Middle Designer",
-    "creator": 8,
-    "creation_date": "2024-01-20",
-    "start_date": "2024-02-01",
-    "end_date": "2024-10-31",
-    "status": "STATUS_IN_PROGRESS",
-    "executor": 9
-  }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 3,
-  "fields": {
-    "title": "Повышение навыков моделирования",
-    "creator": 5,
-    "creation_date": "2024-01-01",
-    "start_date": "2024-01-08",
-    "end_date": "2024-01-28",
-    "status": "STATUS_DELAYED",
-    "executor": 6
-  }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 4,
-  "fields": {
-    "title": "Системный аналитик уровень Middle",
-    "creator": 5,
-    "creation_date": "2024-01-01",
-    "start_date": "2024-01-01",
-    "end_date": "2024-12-31",
-    "status": "STATUS_IN_PROGRESS",
-    "executor": 7
-  }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 5,
-  "fields": {
-    "title": "Системный аналитик уровень Junior +",
-    "creator": 5,
-    "creation_date": "2023-01-01",
-    "start_date": "2023-12-04",
-    "end_date": "2024-01-22",
-    "status": "STATUS_COMPLETED",
-    "executor": 7
-  }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 6,
-  "fields": {
-    "title": "Переход в комманду Back-end на позицию Junior",
-    "creator": 5,
-    "creation_date": "2023-01-01",
-    "start_date": "2023-11-06",
-    "end_date": "2023-11-15",
-    "status": "STATUS_CANCELLED",
-    "executor": 6
-  }
-},
-{
-  "model": "ipr.ipr",
-  "pk": 7,
-  "fields": {
-    "title": "Повышение квалификации по направлению \"Распределённые системы\"",
-    "creator": 5,
-    "creation_date": "2023-01-01",
-    "start_date": "2023-12-20",
-    "end_date": "2024-01-10",
-    "status": "STATUS_NOT_COMPLETED",
-    "executor": 6
-  }
-}
-]
+  ]
+  

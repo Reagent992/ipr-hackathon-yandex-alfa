@@ -7,7 +7,7 @@ from django.utils import timezone
 from core.statuses import Status
 from ipr.models import IPR
 
-from .models import Skill, Task
+from .models import Task
 
 User = get_user_model()
 
@@ -28,8 +28,6 @@ class TaskModelTest(TestCase):
         cls.user2 = User.objects.create_user(
             username="user2", password="password2", email="user2@mail.ru"
         )
-        cls.skill1 = Skill.objects.create(skill_name="Skill 1")
-        cls.skill2 = Skill.objects.create(skill_name="Skill 2")
         cls.ipr = IPR.objects.create(
             title="Test IPR",
             creation_date=cls.setup_creation_date,
@@ -48,8 +46,8 @@ class TaskModelTest(TestCase):
             status=Status.IN_PROGRESS,
             executor=cls.user2,
             ipr=cls.ipr,
+            skill="soft",
         )
-        cls.task1.skill.add(cls.skill1)
         cls.task2 = Task.objects.create(
             name="Task 2",
             description="Description for Task 2",
@@ -61,7 +59,6 @@ class TaskModelTest(TestCase):
             executor=cls.user1,
             ipr=cls.ipr,
         )
-        cls.task2.skill.add(cls.skill2)
 
     def test_task_creation(self):
         self.assertEqual(self.task1.name, "Task 1")
@@ -78,8 +75,8 @@ class TaskModelTest(TestCase):
         self.assertEqual(self.task2.executor, self.user1)
         self.assertEqual(self.task1.ipr, self.ipr)
         self.assertEqual(self.task2.ipr, self.ipr)
-        self.assertTrue(self.skill1 in self.task1.skill.all())
-        self.assertTrue(self.skill2 in self.task2.skill.all())
+        self.assertEqual(self.task1.skill, "soft")
+        self.assertEqual(self.task2.skill, "hard")
 
     def test_task_str_method(self):
         self.assertEqual(str(self.task1), "Task 1")

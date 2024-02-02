@@ -83,24 +83,23 @@ class TaskAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Task.objects.count(), 3)
 
-    # TODO: PUT-метод недоступен, надо переделать на PATCH
-    # def test_update_task(self):
-    #     """
-    #     Проверка обновления задачи (PUT)
-    #     """
-    #     task_id = self.task2.pk
-    #     url = reverse("tasks-detail", kwargs={"pk": task_id})
-    #     data = {
-    #         "name": "Updated Task",
-    #         "description": "Updated Description",
-    #       "start_date": (timezone.now() + timezone.timedelta(days=4)).date(),
-    #         "end_date": (timezone.now() + timezone.timedelta(days=6)).date(),
-    #     }
-    #     response = self.client.put(url, data, format="json")
+    def test_update_task(self):
+        """
+        Проверка обновления задачи (PATCH)
+        """
+        task_id = self.task2.pk
+        url = reverse("tasks-detail", kwargs={"pk": task_id})
+        data = {
+            "name": "Updated Task",
+            "description": "Updated Description",
+            "start_date": (timezone.now() + timezone.timedelta(days=4)).date(),
+            "end_date": (timezone.now() + timezone.timedelta(days=6)).date(),
+        }
+        response = self.client.patch(url, data, format="json")
 
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.task2.refresh_from_db()
-    #     self.assertEqual(self.task2.name, "Updated Task")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.task2.refresh_from_db()
+        self.assertEqual(self.task2.name, "Updated Task")
 
     def test_delete_task(self):
         """
