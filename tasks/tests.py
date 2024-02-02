@@ -2,10 +2,12 @@ from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
 
+from core.statuses import Status
 from ipr.models import IPR
 
-from .models import Skill, Task, TaskStatus
+from .models import Task
 
 User = get_user_model()
 
@@ -13,18 +15,24 @@ User = get_user_model()
 class TaskModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.setup_creation_date = timezone.now().date()
+        cls.setup_start_date = (
+            timezone.now() + timezone.timedelta(days=1)
+        ).date()
+        cls.setup_end_date = (
+            timezone.now() + timezone.timedelta(days=2)
+        ).date()
         cls.user1 = User.objects.create_user(
             username="user1", password="password1", email="user1@mail.ru"
         )
         cls.user2 = User.objects.create_user(
             username="user2", password="password2", email="user2@mail.ru"
         )
-        cls.skill1 = Skill.objects.create(skill_name="Skill 1")
-        cls.skill2 = Skill.objects.create(skill_name="Skill 2")
         cls.ipr = IPR.objects.create(
             title="Test IPR",
-            start_date=date(2024, 1, 1),
-            end_date=date(2024, 1, 10),
+            creation_date=cls.setup_creation_date,
+            start_date=cls.setup_start_date,
+            end_date=cls.setup_end_date,
             creator=cls.user1,
             executor=cls.user2,
         )
@@ -32,42 +40,43 @@ class TaskModelTest(TestCase):
             name="Task 1",
             description="Description for Task 1",
             creator=cls.user1,
-            start_date=date(2024, 1, 1),
-            end_date=date(2024, 1, 10),
-            status=TaskStatus.IN_PROGRESS,
+            creation_date=cls.setup_creation_date,
+            start_date=cls.setup_start_date,
+            end_date=cls.setup_end_date,
+            status=Status.IN_PROGRESS,
             executor=cls.user2,
             ipr=cls.ipr,
+            skill="soft",
         )
-        cls.task1.skill.add(cls.skill1)
         cls.task2 = Task.objects.create(
             name="Task 2",
             description="Description for Task 2",
             creator=cls.user2,
-            start_date=date(2024, 1, 5),
-            end_date=date(2024, 1, 15),
-            status=TaskStatus.COMPLETE,
+            creation_date=cls.setup_creation_date,
+            start_date=cls.setup_start_date,
+            end_date=cls.setup_end_date,
+            status=Status.COMPLETE,
             executor=cls.user1,
             ipr=cls.ipr,
         )
-        cls.task2.skill.add(cls.skill2)
 
     def test_task_creation(self):
         self.assertEqual(self.task1.name, "Task 1")
         self.assertEqual(self.task2.name, "Task 2")
         self.assertEqual(self.task1.creator, self.user1)
         self.assertEqual(self.task2.creator, self.user2)
-        self.assertEqual(self.task1.start_date, date(2024, 1, 1))
-        self.assertEqual(self.task2.start_date, date(2024, 1, 5))
-        self.assertEqual(self.task1.end_date, date(2024, 1, 10))
-        self.assertEqual(self.task2.end_date, date(2024, 1, 15))
-        self.assertEqual(self.task1.status, TaskStatus.IN_PROGRESS)
-        self.assertEqual(self.task2.status, TaskStatus.COMPLETE)
+        self.assertEqual(self.task1.start_date, self.setup_start_date)
+        self.assertEqual(self.task2.start_date, self.setup_start_date)
+        self.assertEqual(self.task1.end_date, self.setup_end_date)
+        self.assertEqual(self.task2.end_date, self.setup_end_date)
+        self.assertEqual(self.task1.status, Status.IN_PROGRESS)
+        self.assertEqual(self.task2.status, Status.COMPLETE)
         self.assertEqual(self.task1.executor, self.user2)
         self.assertEqual(self.task2.executor, self.user1)
         self.assertEqual(self.task1.ipr, self.ipr)
         self.assertEqual(self.task2.ipr, self.ipr)
-        self.assertTrue(self.skill1 in self.task1.skill.all())
-        self.assertTrue(self.skill2 in self.task2.skill.all())
+        self.assertEqual(self.task1.skill, "soft")
+        self.assertEqual(self.task2.skill, "hard")
 
     def test_task_str_method(self):
         self.assertEqual(str(self.task1), "Task 1")
@@ -81,7 +90,7 @@ class TaskModelTest(TestCase):
     def test_task_editing(self):
         new_name = "New Task Name"
         new_description = "New Description for Task"
-        new_status = TaskStatus.COMPLETE
+        new_status = Status.COMPLETE
         new_start_date = date(2024, 2, 1)
         new_end_date = date(2024, 2, 10)
 

@@ -6,3 +6,8 @@ class Status(models.TextChoices):
     IN_PROGRESS = "in_progress", "В работе"
     CANCEL = "cancel", "Отменен"
     TRAIL = "trail", "Отстает"
+
+
+class Skill(models.TextChoices):
+    HARD = "hard", "Hard skill"
+    SOFT = "soft", "Soft skill"
