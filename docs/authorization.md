@@ -6,8 +6,11 @@
 
 ```bash
 cd docs              # Переход в папку docs
-load_fixtures.sh     # Для загрузки фикстур в бд через bash-терминал
 load_fixtures.bat    # Для загрузки фикстур в бд через Windows-терминал
+
+# Для загрузки фикстур в бд через bash-терминал
+chmod +x load_fixtures.sh  # Назначить скрипт исполняемым
+./load_fixtures.sh         # Запустить
 ```
 
 ### Superadmin
