@@ -46,7 +46,6 @@ class TaskAdmin(admin.ModelAdmin):
         "name",
         "description",
         "ipr__title",
-        "skill__skill_name",
         "creator__first_name",
         "creator__last_name",
         "creator__patronymic",
@@ -61,12 +60,14 @@ class TaskAdmin(admin.ModelAdmin):
 
     @admin.display(description="Описание")
     def limited_description(self, obj):
-        max_chars = 70
-        return (
-            (obj.description[:max_chars] + "...")
-            if len(obj.description) > max_chars
-            else obj.description
-        )
+        if obj.description:
+            max_chars = 70
+            return (
+                (obj.description[:max_chars] + "...")
+                if len(obj.description) > max_chars
+                else obj.description
+            )
+        return None
 
     @admin.display(description="ИПР")
     def get_ipr(self, obj):
