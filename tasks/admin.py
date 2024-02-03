@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tasks.models import Skill, Task
+from tasks.models import Task
 
 
 @admin.register(Task)
@@ -30,9 +30,7 @@ class TaskAdmin(admin.ModelAdmin):
         "start_date",
         "end_date",
         "status",
-        "display_skills",
     )
-    filter_horizontal = ("skill",)
     autocomplete_fields = (
         "creator",
         "executor",
@@ -48,7 +46,6 @@ class TaskAdmin(admin.ModelAdmin):
         "name",
         "description",
         "ipr__title",
-        "skill__skill_name",
         "creator__first_name",
         "creator__last_name",
         "creator__patronymic",
@@ -63,25 +60,15 @@ class TaskAdmin(admin.ModelAdmin):
 
     @admin.display(description="Описание")
     def limited_description(self, obj):
-        max_chars = 70
-        return (
-            (obj.description[:max_chars] + "...")
-            if len(obj.description) > max_chars
-            else obj.description
-        )
-
-    @admin.display(description="Навыки")
-    def display_skills(self, obj):
-        return ", ".join(
-            [skill.skill_name for skill in obj.skill.all() if skill]
-        )
+        if obj.description:
+            max_chars = 70
+            return (
+                (obj.description[:max_chars] + "...")
+                if len(obj.description) > max_chars
+                else obj.description
+            )
+        return None
 
     @admin.display(description="ИПР")
     def get_ipr(self, obj):
         return obj.ipr
-
-
-@admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ("skill_name",)
-    search_fields = ("skill_name",)

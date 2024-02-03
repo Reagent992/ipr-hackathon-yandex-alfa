@@ -172,6 +172,10 @@ DJOSER = {
     "SERIALIZERS": {
         "current_user": "api.v1.serializers.api.users_serializer.CustomUserSerializer",
     },
+    "PERMISSIONS": {
+        "user": ["rest_framework.permissions.IsAuthenticated"],
+        "user_list": ["rest_framework.permissions.IsAuthenticated"],
+    },
     "HIDE_USERS": False,
 }
 # -------------------------------------------------------------ALTER USER MODEL

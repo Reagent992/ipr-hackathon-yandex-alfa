@@ -32,9 +32,9 @@ class NotificationAPITestCase(APITestCase):
         self.ipr1 = IPR.objects.create(
             title="Test IPR",
             creator=self.creator,
-            creation_date=timezone.now(),
-            start_date=timezone.now() + timezone.timedelta(days=1),
-            end_date=timezone.now() + timezone.timedelta(days=2),
+            creation_date=timezone.now().date(),
+            start_date=(timezone.now() + timezone.timedelta(days=1)).date(),
+            end_date=(timezone.now() + timezone.timedelta(days=2)).date(),
             status=Status.IN_PROGRESS,
             executor=self.executor,
         )
@@ -49,9 +49,9 @@ class NotificationAPITestCase(APITestCase):
         self.ipr2 = IPR.objects.create(
             title="Test IPR",
             creator=self.creator,
-            creation_date=timezone.now(),
-            start_date=timezone.now() + timezone.timedelta(days=1),
-            end_date=timezone.now() + timezone.timedelta(days=2),
+            creation_date=timezone.now().date(),
+            start_date=(timezone.now() + timezone.timedelta(days=1)).date(),
+            end_date=(timezone.now() + timezone.timedelta(days=2)).date(),
             status=Status.IN_PROGRESS,
             executor=self.executor,
         )
