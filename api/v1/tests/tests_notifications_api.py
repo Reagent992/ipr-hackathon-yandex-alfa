@@ -47,7 +47,7 @@ class NotificationAPITestCase(APITestCase):
         ).first()
         # ----------------------------------------------------------------ИПР-2
         self.ipr2 = IPR.objects.create(
-            title="Test IPR",
+            title="Test IPR 2",
             creator=self.creator,
             creation_date=timezone.now().date(),
             start_date=(timezone.now() + timezone.timedelta(days=1)).date(),

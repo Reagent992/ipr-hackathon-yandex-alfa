@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 from api.v1.serializers.api.task_serializer import TaskSerializer
 from api.v1.serializers.api.users_serializer import CustomUserSerializer
-from core.statuses import Status
 from ipr.models import IPR
 
 User = get_user_model()
@@ -26,7 +25,6 @@ class IPRSerializer(serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True)
     creator = UserSerializer(read_only=True)
     executor = UserSerializer(read_only=True)
-    status = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -41,12 +39,6 @@ class IPRSerializer(serializers.ModelSerializer):
             "tasks",
         )
         model = IPR
-
-    def get_status(self, obj) -> str:
-        if obj.status == Status.IN_PROGRESS and obj.start_date > obj.end_date:
-            obj.status = Status.TRAIL
-            obj.save()
-        return obj.status
 
 
 class IPRSerializerPost(serializers.ModelSerializer):
@@ -69,3 +61,22 @@ class IPRSerializerPost(serializers.ModelSerializer):
         request = self.context.get("request")
         context = {"request": request}
         return IPRSerializer(instance, context=context).data
+
+
+class IPRStatusSerializer(serializers.ModelSerializer):
+    creator = UserSerializer(read_only=True)
+    executor = UserSerializer(read_only=True)
+    progress = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        fields = (
+            "id",
+            "title",
+            "creator",
+            "executor",
+            "start_date",
+            "end_date",
+            "status",
+            "progress",
+        )
+        model = IPR
