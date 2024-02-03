@@ -8,7 +8,7 @@
       "creation_date": "2024-01-20",
       "start_date": "2024-01-28",
       "end_date": "2024-07-20",
-      "status": "STATUS_IN_PROGRESS",
+      "status": "in_progress",
       "executor": 4
     }
   },
@@ -21,7 +21,7 @@
       "creation_date": "2024-01-20",
       "start_date": "2024-02-01",
       "end_date": "2024-10-31",
-      "status": "STATUS_IN_PROGRESS",
+      "status": "in_progress",
       "executor": 9
     }
   },
@@ -47,7 +47,7 @@
       "creation_date": "2024-01-01",
       "start_date": "2024-01-01",
       "end_date": "2024-12-31",
-      "status": "STATUS_IN_PROGRESS",
+      "status": "in_progress",
       "executor": 7
     }
   },
@@ -59,8 +59,8 @@
       "creator": 5,
       "creation_date": "2024-02-02",
       "start_date": "2023-12-04",
-      "end_date": "2024-01-22",
-      "status": "trail",
+      "end_date": "2024-03-22",
+      "status": "complete",
       "executor": 7
     }
   },
@@ -72,8 +72,8 @@
       "creator": 5,
       "creation_date": "2024-02-02",
       "start_date": "2023-11-06",
-      "end_date": "2023-11-15",
-      "status": "trail",
+      "end_date": "2024-11-15",
+      "status": "cancel",
       "executor": 6
     }
   },
@@ -85,8 +85,8 @@
       "creator": 5,
       "creation_date": "2024-02-02",
       "start_date": "2023-12-20",
-      "end_date": "2024-01-10",
-      "status": "trail",
+      "end_date": "2024-05-10",
+      "status": "cancel",
       "executor": 6
     }
   }
