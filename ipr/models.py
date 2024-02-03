@@ -30,6 +30,12 @@ class IPR(DirtyFieldsMixin, models.Model):
 
     class Meta:
         verbose_name = "ИПР"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["executor", "title"],
+                name="unique_executor_title",
+            )
+        ]
 
     def __str__(self):
         return self.title

@@ -1,3 +1,4 @@
+from django.db.models import Value
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
@@ -11,6 +12,7 @@ from api.v1.permissions import TeamBossPermission
 from api.v1.serializers.api.ipr_serializers import (
     IPRSerializer,
     IPRSerializerPost,
+    IPRStatusSerializer,
 )
 from core.statuses import Status
 from ipr.models import IPR
@@ -19,7 +21,7 @@ from ipr.models import IPR
 @extend_schema(tags=["ИПР"])
 @extend_schema_view(
     list=extend_schema(
-        summary=("Список ИПР"),
+        summary="Список ИПР",
         description=(
             "<ul><h3>Поумолчанию выдает список ИПР пользователя отправившего"
             " запрос на данный эндпоинт</h3><li>"
@@ -62,11 +64,10 @@ class IPRViewSet(ModelViewSet):
         return super(IPRViewSet, self).get_permissions()
 
     @extend_schema(
-        summary=("Подробный статус выполнения ИПР"),
+        summary="Подробный статус выполнения ИПР",
         description=(
-            "В параметре <i><b>context</b></i> лежит значение "
-            "<i><b>progress</b></i>, "
-            "которое отображает процентное содержание выполненных задач."
+            "В поле <i><b>progress<b><i> "
+            "лежит процентное содержание выполненных задач."
         ),
     )
     @action(
@@ -77,12 +78,14 @@ class IPRViewSet(ModelViewSet):
         """Дополнительный эндпоинт и View-функция
         для отображения прогресса выполнения ИПР"""
         ipr = get_object_or_404(IPR, id=pk)
-        tasks_without_trail = ipr.tasks.exclude(status=Status.TRAIL).count()
+        tasks_not_canceled = ipr.tasks.exclude(status=Status.CANCEL).count()
         tasks_is_complete = ipr.tasks.filter(status=Status.COMPLETE).count()
-        progress = (tasks_without_trail / 100) * tasks_is_complete
+        progress = 0
+        if tasks_not_canceled > 0:
+            progress = 100 / tasks_not_canceled * tasks_is_complete
+        query = IPR.objects.annotate(progress=Value(progress)).get(id=pk)
         context = {
             "request": request,
-            "progress": progress,
         }
-        serializer = IPRSerializer(ipr, context=context)
+        serializer = IPRStatusSerializer(query, context=context)
         return Response(serializer.data)
