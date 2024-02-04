@@ -209,24 +209,3 @@ RATING_CHOICES = (
     (4, "4 звезды"),
     (5, "5 звезд"),
 )
-# ----------------------------------------------------------------------LOGGING
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "rotating_file": {
-            "level": "INFO",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": "./log_file.log",
-            "maxBytes": 1024 * 1024,  # 1 MB
-            "backupCount": 5,         # 5 files
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["rotating_file"],
-            "level": "INFO",
-            "propagate": True,
-        },
-    },
-}
