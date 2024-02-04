@@ -1,10 +1,10 @@
-from datetime import date
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
 
+from core.statuses import Status
 from ipr.models import IPR
-from tasks.models import Task, TaskStatus
+from tasks.models import Task
 
 from .models import Rating
 
@@ -14,6 +14,13 @@ User = get_user_model()
 class RatingModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.setup_creation_date = timezone.now().date()
+        cls.setup_start_date = (
+            timezone.now() + timezone.timedelta(days=1)
+        ).date()
+        cls.setup_end_date = (
+            timezone.now() + timezone.timedelta(days=2)
+        ).date()
         cls.user1 = User.objects.create_user(
             username="user1", password="password1", email="user1@mail.ru"
         )
@@ -21,9 +28,10 @@ class RatingModelTest(TestCase):
             username="user2", password="password2", email="user2@mail.ru"
         )
         cls.ipr = IPR.objects.create(
-            title="Test IPR",
-            start_date=date(2024, 1, 1),
-            end_date=date(2024, 1, 10),
+            title="Test IPR RATINGS",
+            creation_date=cls.setup_creation_date,
+            start_date=cls.setup_start_date,
+            end_date=cls.setup_end_date,
             creator=cls.user1,
             executor=cls.user2,
         )
@@ -32,9 +40,10 @@ class RatingModelTest(TestCase):
             name="Task 1",
             description="Description for Task 1",
             creator=cls.user1,
-            start_date=date(2024, 1, 1),
-            end_date=date(2024, 1, 10),
-            status=TaskStatus.IN_PROGRESS,
+            creation_date=cls.setup_creation_date,
+            start_date=cls.setup_start_date,
+            end_date=cls.setup_end_date,
+            status=Status.IN_PROGRESS,
             executor=cls.user2,
             ipr=cls.ipr,
         )
@@ -62,3 +71,9 @@ class RatingModelTest(TestCase):
         )
         expected_str_task = f"{self.task} - 5 от {self.user1}"
         self.assertEqual(str(rating_task), expected_str_task)
+
+    def tearDown(self):
+        Rating.objects.all().delete()
+        Task.objects.all().delete()
+        IPR.objects.all().delete()
+        User.objects.all().delete()

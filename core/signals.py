@@ -1,5 +1,6 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_init, post_save
 from django.dispatch import receiver
+from django.utils import timezone
 from notifications.signals import notify
 
 from core.statuses import Status
@@ -71,3 +72,15 @@ def created_task_notification(sender, instance: Task, created, **kwargs):
             verb=text,
             target=instance,
         )
+
+
+@receiver(post_init, sender=Task)
+@receiver(post_init, sender=IPR)
+def set_delayed_status(sender, instance, **kwargs):
+    if (
+        instance.end_date
+        and instance.end_date < timezone.localdate()
+        and instance.status != Status.TRAIL
+    ):
+        instance.status = Status.TRAIL
+        instance.save()

@@ -3,31 +3,10 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.statuses import Skill, Status
 from ipr.models import IPR
 
 User = get_user_model()
-
-
-class TaskStatus(models.TextChoices):
-    COMPLETE = "complete", "Выполнен"
-    IN_PROGRESS = "in_progress", "В работе"
-    CANCEL = "cancel", "Отменен"
-    TRAIL = "trail", "Отстает"
-
-
-class Skill(models.Model):
-    skill_name = models.CharField(
-        max_length=settings.SKILL_LEN,
-        verbose_name="Навык",
-    )
-
-    class Meta:
-        ordering = ("skill_name",)
-        verbose_name = "Навыки"
-        verbose_name_plural = "Навыки"
-
-    def __str__(self):
-        return self.skill_name
 
 
 class Task(DirtyFieldsMixin, models.Model):
@@ -61,12 +40,15 @@ class Task(DirtyFieldsMixin, models.Model):
     )
     status = models.CharField(
         max_length=20,
-        choices=TaskStatus,
-        default=TaskStatus.IN_PROGRESS,
+        choices=Status,
+        default=Status.IN_PROGRESS,
         verbose_name="Статус задачи",
     )
-    skill = models.ManyToManyField(
-        Skill, max_length=settings.SKILL_LEN, verbose_name="Навык"
+    skill = models.CharField(
+        max_length=20,
+        choices=Skill,
+        default=Skill.HARD,
+        verbose_name="Навык",
     )
     executor = models.ForeignKey(
         User,
