@@ -12,7 +12,7 @@ from users.models import Team
 User = get_user_model()
 
 
-class TaskAPITests(APITestCase):
+class IPRAPITests(APITestCase):
     def setUp(self):
         """Тестовые данные"""
         # ------------------------------------------Пользователи и команды
