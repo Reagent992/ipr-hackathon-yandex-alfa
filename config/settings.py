@@ -217,7 +217,7 @@ LOGGING = {
         "rotating_file": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "./log_file.log",
+            "filename": "log_file.log",
             "maxBytes": 1024 * 1024,  # 1 MB
             "backupCount": 5,         # 5 files
         },
