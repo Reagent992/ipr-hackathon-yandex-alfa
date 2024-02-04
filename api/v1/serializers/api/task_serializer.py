@@ -13,6 +13,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "creator",
+            "executor",
             "creation_date",
             "start_date",
             "end_date",
