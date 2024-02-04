@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db.models import F, Value
 from django.db.models.functions import Coalesce, Concat
 from django_filters.rest_framework import DjangoFilterBackend
@@ -43,20 +42,12 @@ class UserViewSet(UserViewSetFromDjoser):
         filters.SearchFilter,
         OrderingFilter,
     )
-    if settings.USE_POSTGRESQL:  # TODO: Проверить.
-        search_fields = (
-            "@last_name",
-            "@first_name",
-            "@patronymic",
-            "@position__name",
-        )
-    else:
-        search_fields = (
-            "last_name",
-            "first_name",
-            "patronymic",
-            "position__name",
-        )
+    search_fields = (
+        "last_name",
+        "first_name",
+        "patronymic",
+        "position__name",
+    )
     serializer_class = CustomUserSerializer
     http_method_names = ["get", "head", "options"]
     ordering_fields = ("full_name", "position_name")

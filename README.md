@@ -13,10 +13,8 @@ TO-DO: Описание проекта.
 
 ## Документация API
 
-Пример адреса на запущенном сервере:
-
-- <http://127.0.0.1:8000/api/v1/swagger/>
-- <http://127.0.0.1:8000/api/v1/redoc/>
+- Документация на сервере: [Swagger](https://ipr.ddns.net/api/v1/schema/swagger-ui/), [ReDoc](https://ipr.ddns.net/api/v1/schema/redoc/)
+- Документация на запущенном локально сервере: [Swagger](http://127.0.0.1:8000/api/v1/schema/swagger-ui/), [ReDoc](http://127.0.0.1:8000/api/v1/schema/redoc/)
 
 ## Используемые библиотеки и зависимости
 

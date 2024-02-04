@@ -21,7 +21,6 @@ services:
       - static:/app/static
       - media:/app/media
       - nginx_conf:/app/nginx/
-      - ./django_logs.log:/app/log_file.log
   frontend:
     image: reamisd/frontend_ipr:latest
     env_file: .env
