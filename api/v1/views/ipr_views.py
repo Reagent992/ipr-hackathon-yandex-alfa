@@ -23,7 +23,7 @@ from ipr.models import IPR
     list=extend_schema(
         summary="Список ИПР",
         description=(
-            "<ul><h3>Поумолчанию выдает список ИПР пользователя отправившего"
+            "<ul><h3>По умолчанию выдает список ИПР пользователя отправившего"
             " запрос на данный эндпоинт</h3><li>"
             "Руководителю команды доступна фильтрация по id исполнителя ИПР"
             " <code>./?user_id=1</code></li>"
@@ -43,7 +43,7 @@ class IPRViewSet(ModelViewSet):
     serializer_class = IPRSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = IPRFilter
-    http_method_names = ["get", "post", "patch", "head", "options"]
+    http_method_names = ["get", "post", "patch", "head", "options", "delete"]
 
     def get_queryset(self):
         if not self.request.query_params and self.action == "list":
