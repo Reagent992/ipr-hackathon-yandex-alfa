@@ -4,6 +4,7 @@ volumes:
   pg_data:
   static:
   media:
+  nginx_conf:
 
 services:
   db:
@@ -12,20 +13,31 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
-    build: .
+    image: reamisd/backend_ipr:latest
     env_file: .env
     depends_on:
       - db
     volumes:
       - static:/app/static
       - media:/app/media
+      - nginx_conf:/app/nginx/
+      - ./django_logs.log:/app/log_file.log
+  frontend:
+    image: reamisd/frontend_ipr:latest
+    env_file: .env
+    command: cp -r /app/build/. /static/
+    volumes:
+      - static:/static
   gateway:
+    image: nginx:latest
     depends_on:
       - backend
-    build: ./nginx/
     env_file: .env
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - static:/static
       - media:/media
+      - nginx_conf:/etc/nginx/conf.d/
+      - ./error.log:/var/log/nginx/error.log
+      - ./access.log:/var/log/nginx/access.log
