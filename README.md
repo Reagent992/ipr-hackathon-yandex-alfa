@@ -7,13 +7,36 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
-TO-DO: Описание проекта.
+![Main page](./docs/pics/main_page.png)
 
-## [Репозиторий Frontend](https://github.com/NataliyaNikulshina/ipr-hackathon-yandex-alfa)
+Проект для отслеживания индивидуальных планов развития.\
+Сделан командой № 8 в рамках хакатона Яндекс-Практикума и Альфа-Банка.\
+Для ознакомления, проект временно [доступен на сервере](https://ipr.ddns.net/), для входа используйте [эти аккаунты](./docs/authorization.md).
+
+## [Ссылка на репозиторий Frontend](https://github.com/NataliyaNikulshina/ipr-hackathon-yandex-alfa)
+
+## Запуск проекта
+
+### 1. Требуется заполнить `.env` файл
+
+- пример заполнения находится в `.envexample`
+
+### 2. Запуск проекта
+
+- Весь проект, используя docker:  `docker compose up`
+  - Проект будет доступен по адресу `localhost:8080`
+- Локальный запуск бэкенда:
+  - Перейти в папку со скопированным проектом
+  - Создание __venv__ `python -m venv venv`
+  - Установка зависимостей `pip install -r requirements.txt`
+  - Запуск сервера разработки `python manage.py runserver`
+
+### 3. [Загрузка фикстур в БД](docs/authorization.md) - _Опционально_
 
 ## Документация API
 
 - Документация на сервере: [Swagger](https://ipr.ddns.net/api/v1/schema/swagger-ui/), [ReDoc](https://ipr.ddns.net/api/v1/schema/redoc/)
+- Скриншоты Swagger: [Развернутый](./docs/pics/doc_full_size.png), [Не развернутый](./docs/pics/doc.png)
 - Документация на запущенном локально сервере: [Swagger](http://127.0.0.1:8000/api/v1/schema/swagger-ui/), [ReDoc](http://127.0.0.1:8000/api/v1/schema/redoc/)
 
 ## Используемые библиотеки и зависимости
@@ -40,12 +63,6 @@ TO-DO: Описание проекта.
 
 - В начале требует активации хуков `pre-commit install`
 - Далее будет запускаться при попытке сделать commit или при запуске `pre-commit`
-
-## Запуск проекта
-
-### 1. Требуется заполнить `.env` файл, пример заполнения находится в `.envexample`
-
-### 2. [Загрузка фикстур в БД](docs/authorization.md) - _Опционально_
 
 ## Авторы
 
