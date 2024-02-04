@@ -77,10 +77,11 @@ def created_task_notification(sender, instance: Task, created, **kwargs):
 @receiver(post_init, sender=Task)
 @receiver(post_init, sender=IPR)
 def set_delayed_status(sender, instance, **kwargs):
-    if (
-        instance.end_date
-        and instance.end_date < timezone.localdate()
-        and instance.status != Status.TRAIL
-    ):
-        instance.status = Status.TRAIL
-        instance.save()
+    if instance.get_dirty_fields().get("status") == Status.IN_PROGRESS:
+        if (
+            instance.end_date
+            and instance.end_date < timezone.localdate()
+            and instance.status == Status.IN_PROGRESS
+        ):
+            instance.status = Status.TRAIL
+            instance.save()
