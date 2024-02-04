@@ -44,7 +44,7 @@ class TaskViewSet(viewsets.ModelViewSet):
             return Task.objects.filter(
                 executor=self.request.query_params.get("user_id")
             )
-        return self.request.user.tasks.all()
+        return Task.objects.all()
 
     def get_serializer_class(self):
         if self.request.method in ("POST", "PATCH"):
