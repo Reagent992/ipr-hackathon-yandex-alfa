@@ -43,7 +43,7 @@ class IPRViewSet(ModelViewSet):
     serializer_class = IPRSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = IPRFilter
-    http_method_names = ["get", "post", "patch", "head", "options", "delete"]
+    http_method_names = ["get", "post", "patch", "head", "options"]
 
     def get_queryset(self):
         if not self.request.query_params and self.action == "list":

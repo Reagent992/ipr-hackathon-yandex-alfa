@@ -1,21 +1,17 @@
 import datetime
 import random
 import string
-import tempfile
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from core.statuses import Status
 from ipr.models import IPR
 
 User = get_user_model()
-TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
 
-@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
-class UserTestCase(TestCase):
+class IPRTestCase(TestCase):
     def setUp(self) -> None:
         """Тестовые данные."""
         # ----------------------------------------------------------CASUAL-USER
@@ -62,8 +58,8 @@ class UserTestCase(TestCase):
             "Метод __str__ выдал неверный результат",
         )
 
-    def test_user_creation(self):
-        """Проверка корректности созданных пользовательских данных.."""
+    def test_ipr_creation(self):
+        """Проверка корректности созданных данных ИПР."""
         ipr_from_db = IPR.objects.get(executor=self.executor)
         self.assertEqual(ipr_from_db.creator, self.creator)
         self.assertEqual(
