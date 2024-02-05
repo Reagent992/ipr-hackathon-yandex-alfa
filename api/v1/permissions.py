@@ -23,4 +23,10 @@ class TeamBossPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.user == obj.creator:
             return True
+        if (
+            request.method == "PATCH"
+            and "status" in request.data
+            and request.data["status"] == "complete"
+        ):
+            return request.user == obj.executor
         return False
