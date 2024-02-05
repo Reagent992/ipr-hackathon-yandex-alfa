@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import permissions, viewsets
+from rest_framework import viewsets
 
-from api.v1.permissions import TeamBossPermission
 from api.v1.serializers.api.task_serializer import (
     TaskSerializer,
     TaskSerializerPost,
@@ -54,8 +53,3 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
-
-    def get_permissions(self):
-        if self.request.method not in permissions.SAFE_METHODS:
-            self.permission_classes = [TeamBossPermission]
-        return super(TaskViewSet, self).get_permissions()
